@@ -30,7 +30,7 @@ Route::group(['middleware' => 'guest:api'], function () {
 Route::group(['middleware' => ['auth.clinic']], function() {
   Route::get('load/enum', 'MasterDataController@loadEnumData');
   Route::get('load/master', 'MasterDataController@loadMasterData');
-  
+
   Route::post('/update/firebase', 'ClinicController@updateFirebaseKey');
 
   Route::post('/menus/photoupload', 'MenuController@uploadPhoto');
@@ -88,7 +88,7 @@ Route::group(['middleware' => ['auth.clinic']], function() {
   Route::get('/pref/{pref_id}/cities', 'MasterDataController@getCities');
   Route::get('/city/{id}/towns', 'MasterDataController@getTowns');
 
-  
+
   Route::get('logout', 'Auth\LoginController@logout');
 
   Route::get('profile', 'ProfileController@get');

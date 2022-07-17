@@ -16,7 +16,7 @@ import CSelect from "./components/CSelect";
 import CEnumSelect from "./components/CEnumSelect";
 
 require("./firebase_info")
-
+require("./bootstrap.js")
 Vue.use(VueLazyLoad)
 Vue.use(ToggleButton)
 Vue.component('multiselect', Multiselect);

@@ -288,7 +288,20 @@ export default {
   components: {
     VueEasyLightbox
   },
-
+  created(){
+    // console.log(`Chat.${this.$route.params.id}`);
+    Echo.private(`Chat.${this.$route.params.id}`).listen(
+        ".private-chat-event",
+        (e) => {
+            console.log(e.message);
+            e.message['is_mine']=false;
+            this.messages.push(e.message);
+            this.$nextTick(() => this.scrollToEnd());
+            // this.friend.session.open ? this.read() : "";
+            // this.chats.push({ message: e.content, type: 1, send_at: "Just Now" });
+        }
+    );
+  },
   computed: {
     ...mapGetters({
       user: 'auth/user',
@@ -310,7 +323,6 @@ export default {
         this.reservation = res1.data.reservation
         this.messages = res2.data.messages
         this.doctors = res3.data.doctors;
-
         this.$nextTick(() => this.scrollToEnd());
       }).finally(() => {
         this.$store.dispatch('state/removeIsLoading')
@@ -469,6 +481,7 @@ export default {
                         created_at: res.data.message.created_at,
                     }
                 }
+                this.$nextTick(() => this.scrollToEnd());
 
                 // this.updateFirebase(this.reservation.patient_info.firebase_key, pushMessage)
 
@@ -482,7 +495,6 @@ export default {
     },
 
     handleFileInput() {
-      $('#attachment-dropzone').trigger('click')
     },
 
     getDateString(value) {

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Broadcast;
 
+use App\Models\Mailbox;
 /*
 |--------------------------------------------------------------------------
 | Broadcast Channels
@@ -15,4 +16,12 @@ use Illuminate\Support\Facades\Broadcast;
 
 Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
+});
+Broadcast::channel('Chat.{mailbox_id}', function ($user, $mailbox) {
+    // if ($user->id  === $mailbox->reservation->clinic->user_id) {
+    //     // dd('afa');
+    //     return true;
+    // }
+    // return false;
+    return true;
 });
