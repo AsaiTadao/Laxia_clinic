@@ -18,7 +18,7 @@ class CreateCaseMenusTable extends Migration
             $table->smallInteger('menu_id')->unsigned();
 
             $table->foreign('case_id')->references('id')->on('cases')->onDelete('cascade');
-            $table->foreign('menu_id')->references('id')->on('menus')->onDelete('cascade');
+            // $table->foreign('menu_id')->references('id')->on('menus')->onDelete('cascade');
         });
     }
 
