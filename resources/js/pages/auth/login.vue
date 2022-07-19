@@ -24,7 +24,7 @@
               <has-error :form="form" field="password" />
             </div>
           </div>
-          <div class="auth--forget">            
+          <div class="auth--forget">
               <router-link :to="{ name: 'password.request' }">
                 パスワードを忘れた場合
               </router-link>
@@ -77,7 +77,8 @@ export default {
         token: data.token,
         remember: this.remember
       })
-
+      // Echo.connector.pusher.config.auth.headers['Authorization'] = 'Bearer '+data.token;
+      console.log(data.token);
       // Fetch the user.
       await this.$store.dispatch('auth/fetchUser')
 

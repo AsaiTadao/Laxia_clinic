@@ -66,7 +66,7 @@ class MailboxController extends Controller
     {
         $mailbox = $this->service->get($id);
         $this->authorize('rw', $mailbox);
-        
+
         return response()->json([
             'reservation' => $mailbox->reservation->load(['patient', 'clinic', 'doctor', 'hopeTimes'])
         ]);
@@ -103,7 +103,7 @@ class MailboxController extends Controller
             \Log::error($e->getMessage());
 
             return response()->json([
-                'message' => 'メッセージを送信できません。'
+                'message' => $e->getMessage()
             ], 500);
         }
 
@@ -119,5 +119,5 @@ class MailboxController extends Controller
             'photo' => $path[1]
         ], 200);
     }
-    
+
 }
