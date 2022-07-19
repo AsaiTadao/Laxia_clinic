@@ -14,7 +14,7 @@ class ChangeDoctorIdColumnToDoctorsTable extends Migration
     public function up()
     {
         Schema::table('doctors', function (Blueprint $table) {
-            $table->renameColumn('doctor_id', 'user_id');
+            // $table->renameColumn('doctor_id', 'user_id');
         });
     }
 

@@ -243,7 +243,7 @@ import VueEasyLightbox from 'vue-easy-lightbox'
 export default {
   middleware: 'auth',
 
-  data() {
+  data () {
     return {
         messages: [],
         doctors: [],
@@ -289,7 +289,7 @@ export default {
     VueEasyLightbox
   },
   created(){
-    // console.log(`Chat.${this.$route.params.id}`);
+    console.log(`Chat.${this.$route.params.id}`);
     Echo.private(`Chat.${this.$route.params.id}`).listen(
         ".private-chat-event",
         (e) => {
