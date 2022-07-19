@@ -29,12 +29,10 @@ class TreatProgress extends Model
   {
     return $this->belongsTo(Diary::class);
   }
-
   public function medias()
   {
     return $this->morphMany(Media::class, 'mediable');
   }
-
   public function statuses()
   {
     return $this->belongsToMany(TreatIndicator::class, 'treat_status', 'progress_id', 'indicator_id')

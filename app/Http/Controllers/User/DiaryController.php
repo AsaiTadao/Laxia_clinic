@@ -87,7 +87,7 @@ class DiaryController extends Controller
                 'diary' => $diary->load([
                     'owner',
                     'categories',
-                    'menus',
+                    'menus.diaries',
                     'text_questions',
                     // 'rate_questions',
                     // 'clinic',

@@ -77,7 +77,7 @@ export default {
         token: data.token,
         remember: this.remember
       })
-      Echo.connector.pusher.config.auth.headers['Authorization'] = 'Bearer '+data.token;
+      // Echo.connector.pusher.config.auth.headers['Authorization'] = 'Bearer '+data.token;
       console.log(data.token);
       // Fetch the user.
       await this.$store.dispatch('auth/fetchUser')

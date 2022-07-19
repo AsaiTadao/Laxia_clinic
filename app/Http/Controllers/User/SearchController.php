@@ -56,9 +56,13 @@ class SearchController extends Controller
         ], 200);
     }
     public function globalsearch(){
+        $currentUser = auth()->guard('patient')->user();
+        $patient = $currentUser->patient;
+        $recentsearch=$this->searchService->recentsearch($patient->id);
        $globalsearch=$this->searchService->globalsearch();
        return response()->json([
         'globalsearch' => $globalsearch,
+        'recentsearch' => $recentsearch
         ], 200);
     }
     public function recentsearch(){
