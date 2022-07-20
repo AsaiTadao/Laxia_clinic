@@ -21,6 +21,7 @@ class DiaryService
     $per_page = isset($search['per_page']) ? $search['per_page'] : 20;
     $query = Diary::query()
       ->with([
+        'owner',
         'categories'
       ])->withCount('likers');
 
@@ -69,11 +70,11 @@ class DiaryService
     //   });
     // }
 
-    if ($search['price_min']!=0) {
+    if (isset($search['price_min'])&&$search['price_min']!=0) {
       $query->where('price', '>=', $search['price_min']);
     }
 
-    if ($search['price_max']!=0) {
+    if (isset($search['price_max'])&&$search['price_max']!=0) {
       $query->where('price', '<=', $search['price_max']);
     }
 
@@ -83,13 +84,15 @@ class DiaryService
         $subquery->where('menus.id', $menuId);
       });
     }
-
-    if ($search['rate']!='6,6,6,6,6') {
-      $rate = $search["rate"];
-      $query->where('ave_rate', '<=', $rate)
-        ->where('ave_rate', '>', $rate - 1);
+    
+    if (isset($search['rate'])&&$search['rate']!='6,6,6,6,6') {
+       $query->whereIn(\DB::raw('Round(ave_rate)'),explode(',',$search['rate']));
     }
-
+    if (isset($search['year'])&&$search['year']!='0,0,0,0,0,0') {
+      $query->whereHas('owner',function($suvquery) use ($search) {
+       $suvquery->whereIn(\DB::raw('TIMESTAMPDIFF(year,patients.birthday,CURRENT_DATE)/10+1'),explode(',',$search['year']));
+      });
+    }
     // if (isset($search['orderby'])) {
     //   $orderby = $search['orderby'];
     //   if ($orderby == 'ave_rate') {

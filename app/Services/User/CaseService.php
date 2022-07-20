@@ -35,12 +35,12 @@ class CaseService
         $query->join('case_categories as cc', 'cases.id', '=', 'cc.case_id')
               ->where('cc.category_id', $search['category_id']);
       }
-      if ($search['price_min']!=0) {
+      if (isset($search['price_min'])&&$search['price_min']!=0) {
         $query->whereHas('menus', function ($subquery) use ($search) {
           $subquery->where('price', '>=', $search['price_min']);
         });
       }
-      if ($search['price_max']!=0) {
+      if (isset($search['price_max'])&&$search['price_max']!=0) {
           $query->whereHas('menus', function ($subquery) use ($search) {
 
                $subquery->where('price', '<=', $search['price_max']);
