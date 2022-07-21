@@ -290,7 +290,7 @@ export default {
   },
   created(){
     console.log(`Chat.${this.$route.params.id}`);
-    Echo.private(`Chat.${this.$route.params.id}`).listen(
+    Echo.channel(`Chat.${this.$route.params.id}`).listen(
         ".private-chat-event",
         (e) => {
             console.log(e.message);
