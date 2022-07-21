@@ -33,6 +33,6 @@ class PrivateChatEvent implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return new PrivateChannel('Chat.' . $this->message['mailbox_id']);
+        return new Channel('Chat.' . $this->message['mailbox_id']);
     }
 }
