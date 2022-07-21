@@ -7,7 +7,7 @@
             <template v-for="(msg, index) in messages" >
               <div v-if="!index || getDateString(messages[index-1].created_at) != getDateString(msg.created_at)" class="chat-date">{{ msg.created_at | formatDateWithDay }}</div>
               <div :class="{'other': !msg.is_mine, 'me': msg.is_mine }">
-                <p class="avatar"><img src="/img/img.svg" width="45px"></p>
+                <p class="avatar"><img :src="reservation.patient.photo" width="45px"></p>
                 <div>
                   <div>
                     <p v-if="!msg.is_file" class="message">{{ msg.message }}
@@ -293,7 +293,6 @@ export default {
     Echo.channel(`Chat.${this.$route.params.id}`).listen(
         ".private-chat-event",
         (e) => {
-            console.log(e.message);
             e.message['is_mine']=false;
             this.messages.push(e.message);
             this.$nextTick(() => this.scrollToEnd());
