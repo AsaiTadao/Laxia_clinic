@@ -34,7 +34,7 @@ class MailboxService
       ->where('id',$message['id'])
       ->first();
     broadcast(new PrivateChatEvent($sender));
-    return $message;
+    return $sender;
   }
 
   public function createMessage($attrs)
