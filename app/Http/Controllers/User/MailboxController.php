@@ -47,7 +47,7 @@ class MailboxController extends Controller
     {
         $mailbox = $this->service->get($id);
         $this->authorize('rw', $mailbox);
-        
+
         return response()->json([
             'reservation' => $mailbox->reservation->load(['patient', 'clinic'])
         ]);
@@ -55,11 +55,13 @@ class MailboxController extends Controller
 
     public function getMessages(Mailbox $mailbox)
     {
+
         $this->authorize('rw', $mailbox);
 
         $where = [
             'mailbox_id' => $mailbox->id
         ];
+
         $this->service->readLastMessage($where, auth()->user());
         $messages = $this->service->getMessages($where);
 
@@ -72,7 +74,6 @@ class MailboxController extends Controller
     {
         $mailbox = $this->service->get($id);
         $this->authorize('rw', $mailbox);
-
         \DB::beginTransaction();
         try {
             $message = $this->service->addMessage($request->all(), ['mailbox_id' => $id]);
@@ -83,7 +84,7 @@ class MailboxController extends Controller
             \Log::error($e->getMessage());
 
             return response()->json([
-                'message' => 'メッセージを送信できません。'
+                'message' => $e->getMessage()
             ], 500);
         }
 
@@ -99,5 +100,5 @@ class MailboxController extends Controller
             'photo' => $path[1]
         ], 200);
     }
-    
+
 }

@@ -7,6 +7,7 @@ use App\Models\Message;
 use DB;
 use Auth;
 use Throwable;
+use App\Events\PrivateChatEvent;
 
 /**
  * Class MailboxService
@@ -26,10 +27,14 @@ class MailboxService
     $additional['user_id'] = $currentUser->id;
 
     $msgAttrs = Arr::get($attrs, 'messages');
+    $message=Message::create(
+        array_merge($msgAttrs, $additional));
 
-    return Message::create(
-      array_merge($msgAttrs, $additional)
-    );
+    $sender=Message::with('sender.clinic')
+      ->where('id',$message['id'])
+      ->first();
+    broadcast(new PrivateChatEvent($sender));
+    return $message;
   }
 
   public function createMessage($attrs)
@@ -39,7 +44,7 @@ class MailboxService
 
   public function getMessages($where)
   {
-    return Message::with('sender')
+    return Message::with('sender.clinic')
       ->where($where)
       ->get();
   }
