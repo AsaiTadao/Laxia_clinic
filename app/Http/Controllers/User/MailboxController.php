@@ -61,7 +61,6 @@ class MailboxController extends Controller
         $where = [
             'mailbox_id' => $mailbox->id
         ];
-
         $this->service->readLastMessage($where, auth()->user());
         $messages = $this->service->getMessages($where);
 

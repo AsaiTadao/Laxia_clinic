@@ -60,7 +60,8 @@ class CounselingController extends Controller
                     'questions',
                     'clinic',
                     'doctor',
-                    'categories'
+                    'categories',
+                    'owner'
                 ])
             ]
         ], 200);

@@ -40,7 +40,8 @@ class ProgressController extends Controller
 
         return response()->json([
             'progress' => $progress->load([
-                'diary.menus.diaries',
+                'diary.menus',
+                'diary.owner',
                 'statuses',
                 'medias',
                 'comments_limit50'
