@@ -20,6 +20,7 @@ class CreateDiariesTable extends Migration
             $table->date('treat_date')->nullable()->comment('施術を受けた日');
             $table->bigInteger('doctor_id')->unsigned()->comment('担当ドクターID');
             $table->integer('price')->nullable()->comment('施術費用');
+            $table->tinyInteger('price')->default(0)->comment('施術費用');
             $table->timestamps();
 
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');

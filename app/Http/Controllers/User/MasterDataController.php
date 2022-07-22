@@ -79,6 +79,24 @@ class MasterDataController extends Controller
             ]
         ], 200);
     }
+    public function loadMasterPartData(Request $request)
+    {
+        $partCategories = $this->categoryService->toArrayPart();
+        // $concenrCategories = $this->concernCategoryService->toArray();
+        // $treatCategories = $this->treatCategoryService->toArray();
+
+        return response()->json([
+            'status' => 1,
+            'message' => '',
+            'data' => [
+                // 'treatCategories' => $treatCategories,
+                'treatCategories' => $partCategories,
+                // 'partCategories' => $partCategories,
+                // 'concernCategories' => $concenrCategories
+                // 'concernCategories' => $partCategories
+            ]
+        ], 200);
+    }
     public function loadMasterDataIndex($id)
     {
         $partCategories = $this->categoryService->toIndex($id);

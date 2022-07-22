@@ -54,7 +54,7 @@ class MailboxService
     $message_max_id = Message::where($where)->max('id');
     $where['user_id'] = $user->id;
     \DB::table('mailbox_users')
-      ->where($where)                   
+      ->where($where)
       ->update(['last_message_id' => $message_max_id]);
 
     return $message_max_id;

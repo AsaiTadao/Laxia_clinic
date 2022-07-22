@@ -3,6 +3,7 @@ namespace App\Services\Master;
 
 use Illuminate\Support\Arr;
 use App\Models\Master\Category;
+use App\Models\Master\PartCategory;
 use DB;
 use Auth;
 use Throwable;
@@ -18,6 +19,10 @@ class CategoryService
     return Category::whereNull('parent_id')
       ->with('allChildren')
       ->get();
+  }
+  public function toArrayPart()
+  {
+    return PartCategory::load('allChildren');
   }
   public function toIndex($id)
   {
