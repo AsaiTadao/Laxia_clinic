@@ -31,6 +31,15 @@ class ClinicService
     if (isset($search['q'])) {
       $query->where('name', 'LIKE', "%{$search['q']}%");
     }
+    if (isset($search['category_id']))
+      {
+
+        $query->whereHas('doctors',function($suvquery) use ($search) {
+            $suvquery->whereHas('categories',function($suvquery2) use ($search) {
+                $suvquery2->whereIn('doctor_categories.category_id',explode(',',$search['category_id']));
+            });
+        });
+      }
 
     if (isset($search['favorite']) && $search['favorite'] == 1)
     {

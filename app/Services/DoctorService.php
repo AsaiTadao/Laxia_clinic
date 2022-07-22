@@ -32,7 +32,7 @@ class DoctorService
     //     $subquery->whereIn('doctor_categories.category_id', $ids);
     //   });
         $query->whereHas('categories',function($suvquery) use ($search) {
-        $suvquery->whereIn('doctor_categories.id',explode(',',$search['category_id']));
+        $suvquery->whereIn('doctor_categories.category_id',explode(',',$search['category_id']));
     });
     }
     if(isset($search['q']) && $search['q'] != '') {
