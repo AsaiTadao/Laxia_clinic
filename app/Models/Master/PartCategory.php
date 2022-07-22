@@ -21,7 +21,7 @@ class PartCategory extends Model
   ];
 
 
-  public function children()
+  public function allChildren()
   {
     return $this->hasMany(Category::class, 'part_id');
   }

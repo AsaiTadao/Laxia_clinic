@@ -79,9 +79,9 @@ class MasterDataController extends Controller
             ]
         ], 200);
     }
-    public function loadMasterPartData(Request $request)
+    public function loadMasterPartData($id)
     {
-        $partCategories = $this->categoryService->toArrayPart();
+        $partCategories = $this->categoryService->toArrayPart($id);
         // $concenrCategories = $this->concernCategoryService->toArray();
         // $treatCategories = $this->treatCategoryService->toArray();
 

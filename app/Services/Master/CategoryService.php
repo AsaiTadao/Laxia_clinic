@@ -20,9 +20,11 @@ class CategoryService
       ->with('allChildren')
       ->get();
   }
-  public function toArrayPart()
+  public function toArrayPart($id)
   {
-    return PartCategory::load('allChildren');
+    return PartCategory::where('id',$id)
+    ->with('allChildren')
+    ->get();
   }
   public function toIndex($id)
   {
