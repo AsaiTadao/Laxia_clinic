@@ -92,6 +92,7 @@ class DiaryController extends Controller
                     // 'rate_questions',
                     // 'clinic',
                     // 'doctor',
+                    'medias',
                     'beforemedias',
                     'aftermedias',
                     'progresses',
