@@ -8,6 +8,7 @@ use App\Services\User\CaseService;
 use App\Services\MenuService;
 use App\Services\ClinicService;
 use App\Services\DoctorService;
+use App\Services\Master\CategoryService;
 use App\Services\DiaryService;
 use App\Services\SearchService;
 
@@ -19,6 +20,8 @@ class SearchController extends Controller
     protected $doctorService;
     protected $diaryService;
     protected $searchService;
+    protected $categoryService;
+
 
     public function __construct(
         CaseService $caseService,
@@ -26,7 +29,8 @@ class SearchController extends Controller
         ClinicService $clinicService,
         DoctorService $doctorService,
         DiaryService $diaryService,
-        SearchService $searchService
+        SearchService $searchService,
+        CategoryService $categoryService
     ) {
         $this->caseService = $caseService;
         $this->menuService = $menuService;
@@ -34,6 +38,7 @@ class SearchController extends Controller
         $this->doctorService = $doctorService;
         $this->diaryService = $diaryService;
         $this->searchService=$searchService;
+        $this->categoryService=$categoryService;
     }
 
     public function search(Request $request)
@@ -76,37 +81,40 @@ class SearchController extends Controller
     public function midsearch(Request $request)
     {
         $params = $request->all();
-        $midcases = $this->caseService->paginate($params);
-        $cases=[];
-        foreach($midcases as $case){
-            array_push($cases,$case->id);
-        }
+        // $midcases = $this->caseService->paginate($params);
+        // $cases=[];
+        // foreach($midcases as $case){
+        //     array_push($cases,$case->id);
+        // }
+        $categories=[];
+        $categories = $this->categoryService->midSearch($params);
         $midmenus = $this->menuService->paginate($params);
         $menus=[];
         foreach($midmenus as $menu){
-            array_push($menus,$menu->id);
+            array_push($menus,['id'=>$menu->id,'name'=>$menu->name]);
         }
         $midclinics = $this->clinicService->paginate($params);
         $clinics=[];
         foreach($midclinics as $clinic){
-            array_push($clinics,$clinic->id);
+            array_push($clinics,['id'=>$clinic->id,'name'=>$clinic->name]);
         }
         $middoctors = $this->doctorService->paginate($params);
         $doctors=[];
         foreach($middoctors as $doctor){
-            array_push($doctors,$doctor->id);
+            array_push($doctors,['id'=>$doctor->id,'name'=>$doctor->name]);
         }
-        $middiaries = $this->diaryService->paginate($params);
-        $diaries=[];
-        foreach($middiaries as $diarie){
-            array_push($diaries,$diarie->id);
-        }
+        // $middiaries = $this->diaryService->paginate($params);
+        // $diaries=[];
+        // foreach($middiaries as $diarie){
+        //     array_push($diaries,$diarie->id);
+        // }
         return response()->json([
-            'cases' => $cases,
+            // 'cases' => $cases,
             'menus' => $menus,
             'clinics' => $clinics,
             'doctors' => $doctors,
-            'diaries' => $diaries,
+            'categories' => $categories,
+            // 'diaries' => $diaries,
         ], 200);
     }
 }

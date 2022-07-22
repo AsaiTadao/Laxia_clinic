@@ -84,7 +84,7 @@ class DiaryService
         $subquery->where('menus.id', $menuId);
       });
     }
-    
+
     if (isset($search['rate'])&&$search['rate']!='6,6,6,6,6') {
        $query->whereIn(\DB::raw('Round(ave_rate)'),explode(',',$search['rate']));
     }

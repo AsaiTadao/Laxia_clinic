@@ -20,6 +20,26 @@ class CategoryService
       ->with('allChildren')
       ->get();
   }
+  public function midSearch($search){
+    $mid=[];
+    $query = Category::query();
+    if(isset($search['q'])){
+        $query->where('name', 'LIKE', "%{$search['q']}%");
+    }
+    $res=$query->whereNotNull('part_id')->get();
+    foreach($res as $sub){
+        array_push($mid,['id'=>$sub->part_id,'name'=>$sub->name,'part_id'=>$sub->id]);
+    }
+    $partquert=PartCategory::query();
+    if(isset($search['q'])){
+        $partquert->where('name', 'LIKE', "%{$search['q']}%");
+    }
+    $partres=$query->get();
+    foreach($partres as $sub){
+        array_push($mid,['id'=>$sub->id,'name'=>$sub->name,'part_id'=>$sub->part_id]);
+    }
+    return $mid;
+  }
   public function toArrayPart($id)
   {
     return PartCategory::where('id',$id)
