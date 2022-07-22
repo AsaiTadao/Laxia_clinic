@@ -24,7 +24,7 @@ class CategoryService
   {
     return PartCategory::where('id',$id)
     ->with('allChildren')
-    ->get();
+    ->first();
   }
   public function toIndex($id)
   {
