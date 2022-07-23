@@ -46,18 +46,18 @@ class SearchController extends Controller
         $currentUser = auth()->guard('patient')->user();
         $patient = $currentUser->patient;
         $params = $request->all();
-        $cases = $this->caseService->paginate($params);
+        // $cases = $this->caseService->paginate($params);
         $menus = $this->menuService->paginate($params);
         $clinics = $this->clinicService->paginate($params);
         $doctors = $this->doctorService->paginate($params);
-        $diaries = $this->diaryService->paginate($params);
+        // $diaries = $this->diaryService->paginate($params);
         $this->searchService->store($request,$patient->id);
         return response()->json([
-            'cases' => $cases,
+            // 'cases' => $cases,
             'menus' => $menus,
             'clinics' => $clinics,
             'doctors' => $doctors,
-            'diaries' => $diaries,
+            // 'diaries' => $diaries,
         ], 200);
     }
     public function globalsearch(){
