@@ -23,7 +23,7 @@ class PaymentService
       'reservation.patient',
       'reservation.doctor',
     ]);
-    
+
     if (isset($search['clinic_id'])) {
       $clinicId = $search['clinic_id'];
       $query->whereHas('reservation', function($subquery) use ($clinicId) {
@@ -37,7 +37,22 @@ class PaymentService
         $subquery->where('patient_id', $patientId);
       });
     }
-
+    if(isset($search['start_time'])){
+      $start_time=$search['start_time'];
+      $query->whereHas('reservation', function($subquery) use ($start_time) {
+        $subquery->where([
+            ['visit_date','>=',$start_time]
+        ]);
+      });
+    }
+    if(isset($search['end_time'])){
+        $end_time=$search['end_time'];
+      $query->whereHas('reservation', function($subquery) use ($end_time) {
+        $subquery->where([
+            ['visit_date','<=',$end_time]
+        ]);
+      });
+    }
     $query->orderby('created_at', 'desc');
     $sum = $query->sum('total_price');
     return [

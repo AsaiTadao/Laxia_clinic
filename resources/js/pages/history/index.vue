@@ -1,8 +1,8 @@
 <template>
   <div class="main-in">
     <div class="main-content">
-      <div class="date-pick">					
-        <p><input type="date" name=""> ~ <input type="date" name=""></p>
+      <div class="date-pick">
+        <p><input type="date" name="" @change="handleSelectDate" v-model="query.start_time"> ~ <input type="date" name="" @change="handleSelectDate" v-model="query.end_time"></p>
         <p class="price">{{ $t('総決済額') }} : {{ total | currency }}</p>
       </div>
       <div class="tab-content">
@@ -37,7 +37,7 @@
           v-if="pageInfo"
           :page="query.page"
           :page-count="pageInfo.last_page"
-          :click-handler="handlePaginate" /> 
+          :click-handler="handlePaginate" />
       </div>
     </div>
   </div>
@@ -56,14 +56,14 @@ export default {
       query: {
         per_page: 20,
         page: 1,
-        // start_time: "",
-        // start_time: "",
+        start_time: "",
+        end_time: "",
       },
       pageInfo: undefined,
       total: 0,
     }
   },
-  
+
   computed: {
     ...mapGetters({
       hope_treat_types: 'constant/hope_treat_types',
@@ -77,6 +77,7 @@ export default {
   methods: {
     getData() {
       this.$store.dispatch('state/setIsLoading')
+      // console.log(this.query);
       const qs = this.$utils.getQueryString(this.query)
       axios.get(`/api/clinic/payments?${qs}`)
         .then(res => {
@@ -91,7 +92,21 @@ export default {
           this.$store.dispatch('state/removeIsLoading')
         })
     },
-
+    handleSelectDate(value) {
+      // console.log(this.query);
+      // if (param == "current") {
+      //   this.query.selected_date = this.$moment().format("YYYY-MM-DD");
+      // } else if (param == "next") {
+      //   this.query.selected_date = this.$moment(this.query.selected_date)
+      //     .add(1, "days")
+      //     .format("YYYY-MM-DD");
+      // } else if (param == "prev") {
+      //   this.query.selected_date = this.$moment(this.query.selected_date)
+      //     .add(-1, "days")
+      //     .format("YYYY-MM-DD");
+      // }
+      this.getData();
+    },
     handlePaginate(pageNum) {
       this.query = {
         ...this.query,

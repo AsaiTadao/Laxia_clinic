@@ -289,7 +289,7 @@ export default {
     VueEasyLightbox
   },
   created(){
-    console.log(`Chat.${this.$route.params.id}`);
+    // console.log(`Chat.${this.$route.params.id}`);
     Echo.channel(`Chat.${this.$route.params.id}`).listen(
         ".private-chat-event",
         (e) => {

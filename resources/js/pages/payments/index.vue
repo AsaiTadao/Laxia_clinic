@@ -45,7 +45,7 @@
                       gender_types[item.patient ? item.patient.gender : ""]
                 }}
               </td>
-              <td>{{ item.doctor ? item.doctor.name : "" }}</td>
+              <td>{{ item.doctor ? item.doctor.hira_name : "" }}</td>
               <td>
                 {{ item.hope_treat ? hope_treat_types[item.hope_treat] : "" }}
               </td>
@@ -571,6 +571,7 @@ export default {
           .add(-1, "days")
           .format("YYYY-MM-DD");
       }
+      this.getData();
     },
 
     handleShowPaymentModal(rsvId) {
@@ -603,7 +604,7 @@ export default {
 
     handleShowRsvModal(rsvId) {
       this.selectedRsv = this.reservations.find((el) => el.id == rsvId);
-      console.log('hhhhhhhhhhhhhh', this.selectedRsv);
+      // console.log('hhhhhhhhhhhhhh', this.selectedRsv);
       this.rsv_form = {
         reservations: {
           visit_date: this.selectedRsv.visit_date,
