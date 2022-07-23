@@ -88,7 +88,7 @@ class SearchController extends Controller
         // }
         $currentUser = auth()->guard('patient')->user();
         $patient = $currentUser->patient;
-        $this->searchService->store($request['q'] ,$patient->id);
+        $this->searchService->store($params ,$patient->id);
         $categories=[];
         $categories = $this->categoryService->midSearch($params);
         $midmenus = $this->menuService->paginate($params);
