@@ -47,7 +47,9 @@ class Menu extends Model
   protected $appends = [
     'is_favorite',
     'diarycount',
-    'periodsum'
+    'periodsum',
+    'avg_rate',
+    'alltime'
   ];
 
   public function clinic()
@@ -65,7 +67,19 @@ class Menu extends Model
   {
     return $this->hasMany(TreatCase::class);
   }
-
+  public function getAvgRateAttribute()
+  {
+     $avg_rate=0;
+     $diaries=$this->diaries()->get();
+     $count=count($diaries);
+     for($i=0;$i< $count;$i++){
+        $avg_rate+=$diaries[$i]['ave_rate'];
+     }
+     if($count){
+        return $avg_rate/$count;
+     }
+     return 0;
+  }
   public function categories()
   {
       return $this->belongsToMany(Category::class, 'menu_categories', 'menu_id', 'category_id');
@@ -92,7 +106,16 @@ class Menu extends Model
   {
     return $this->morphToMany(Patient::class, 'favoriable', 'favorites');
   }
-
+  public function getAlltimeAttribute()
+  {
+     $alltime=0;
+     $processes=$this->process()->get();
+     $count=count($processes);
+     for($i=0;$i< $count;$i++){
+        $alltime+=$processes[$i]['period'];
+     }
+     return $alltime;
+  }
   public function getIsFavoriteAttribute()
   {
     $currentUser = auth()->guard('patient')->user();

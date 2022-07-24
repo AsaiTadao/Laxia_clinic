@@ -43,7 +43,10 @@ class RsvService
         ->where('status', Status::INPROGRESS)
         ->orderBy('visit_date', 'asc');
     }
-    $query->where('visit_date', $search['selected_date']);
+    if(isset($search['selected_date']))
+    {
+      $query->where('visit_date', $search['selected_date']);
+    }
     $query->orderby('updated_at', 'desc');
 
     return $query->paginate($per_page);

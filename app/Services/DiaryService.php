@@ -157,14 +157,22 @@ class DiaryService
     }
     $diary->menus()->sync($menuPivot);
 
-    $mediaAttrs = Arr::get($attributes, 'medias');
+    $mediaAttrs = Arr::get($attributes, 'before_medias');
     foreach ($mediaAttrs as $id)
     {
       $media = Media::find($id);
+      $media->type=0;
       if (!$media) continue;
       $diary->medias()->save($media);
     }
-
+    $mediaAttrs = Arr::get($attributes, 'after_medias');
+    foreach ($mediaAttrs as $id)
+    {
+      $media = Media::find($id);
+      $media->type=1;
+      if (!$media) continue;
+      $diary->medias()->save($media);
+    }
     $textQustionAttrs = Arr::get($attributes, 'diary_tqs');
     foreach ($textQustionAttrs as $key => $val)
     {
@@ -206,13 +214,22 @@ class DiaryService
 
     $diary->medias()->delete();
     $mediaAttrs = Arr::get($attributes, 'medias');
+    $mediaAttrs = Arr::get($attributes, 'before_medias');
     foreach ($mediaAttrs as $id)
     {
       $media = Media::find($id);
+      $media->type=0;
       if (!$media) continue;
       $diary->medias()->save($media);
     }
-
+    $mediaAttrs = Arr::get($attributes, 'after_medias');
+    foreach ($mediaAttrs as $id)
+    {
+      $media = Media::find($id);
+      $media->type=1;
+      if (!$media) continue;
+      $diary->medias()->save($media);
+    }
     // $diary->rate_questions()->sync([]);
     // $rateQustionAttrs = Arr::get($attributes, 'diary_rqs');
     // foreach ($rateQustionAttrs as $key => $val)

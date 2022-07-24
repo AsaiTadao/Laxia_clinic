@@ -135,6 +135,7 @@ class MenuService
   public function get($id)
   {
     return Menu::with([
+      'clinic',
       'images',
       'categories',
       'diaries',

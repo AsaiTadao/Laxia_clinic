@@ -193,7 +193,7 @@ class Diary extends Model
   public function text_questions()
   {
     return $this->belongsToMany(DiaryTextQuestion::class, 'diary_text_questions', 'diary_id', 'question_id')
-      ->withPivot('answer');
+      ->withPivot('answer')->orderBy('sort_no');
   }
 
   public function progresses()
