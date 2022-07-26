@@ -14,7 +14,7 @@ use Throwable;
  * @package App\Services\User
  */
 class ProfileService
-{ 
+{
   public function update($attributes, $where)
   {
     $patientAttrs = Arr::get($attributes, 'patients');
@@ -22,7 +22,7 @@ class ProfileService
       $where,
       $patientAttrs
     );
-    
+
     $categories = Arr::get($attributes, 'patient_categories');
     $patient->categories()->sync($categories);
 
@@ -33,6 +33,7 @@ class ProfileService
     return Patient::with([
       'questions.medias',
       'diaries.medias',
+      'categories',
       'counselings.medias',
       'favoriteDiaries.medias',
       'favoriteQuestions.medias',
