@@ -8,6 +8,7 @@ use DB;
 use Auth;
 use Throwable;
 use App\Events\PrivateChatEvent;
+use App\Events\BroadcastEvent;
 
 /**
  * Class MailboxService
@@ -30,10 +31,17 @@ class MailboxService
     $message=Message::create(
         array_merge($msgAttrs, $additional));
     // dd($message);
-    $sender=Message::with('sender.clinic')
+    $sender=Message::with([
+      'sender.clinic',
+      'mailbox.users'
+  ])
       ->where('id',$message['id'])
       ->first();
     broadcast(new PrivateChatEvent($sender));
+    $broadcast['mailbox_id']=$sender['mailbox_id'];
+    $broadcast['id']=$sender['mailbox']['users'][1]['id'];
+    // return $broadcast;
+    broadcast(new BroadcastEvent($broadcast));
     return $message;
     // return Message::create(
     //   array_merge($msgAttrs, $additional)

@@ -27,7 +27,7 @@ class ClinicService
         'diaries'
       ])->leftJoinSub($diary_avg, 'diary_avg', function ($join) {
         $join->on('clinics.id', '=', 'diary_avg.clinic_id');
-      });
+      })->select('*');
     if (isset($search['q'])) {
       $query->where('name', 'LIKE', "%{$search['q']}%");
     }
@@ -93,6 +93,10 @@ class ClinicService
 
   public function get($id)
   {
+    $diary_avg = \DB::table('diaries')
+      ->select('clinic_id', DB::raw('avg(ave_rate) as ave_rate'))
+      ->groupBy('clinic_id');
+
     return Clinic::with([
         'images',
         // 'menus_limit2',
@@ -102,7 +106,9 @@ class ClinicService
         'menus.categories',
         'counselings.categories',
         'diaries.categories',
-      ])
+      ])->leftJoinSub($diary_avg, 'diary_avg', function ($join) {
+        $join->on('clinics.id', '=', 'diary_avg.clinic_id');
+      })->select('*')
       ->where('id', $id)
       ->firstOrFail();
   }
