@@ -117,7 +117,7 @@ class QuestionService
     $question = Question::create($data);
 
     $question->categories()->sync($cateArr);
-    if($attributes['medias']){
+    if(isset($attributes['medias'])){
         $mediaArr = Arr::get($attributes, 'medias');
         foreach ($mediaArr as $id)
         {

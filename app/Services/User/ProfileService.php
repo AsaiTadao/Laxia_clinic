@@ -79,6 +79,11 @@ class ProfileService
             'status' => 1,
         ]);
     }
+    else{
+        return response()->json([
+            'status' => 2
+        ]);
+    }
     return response()->json([
         'status' => 1
     ]);
