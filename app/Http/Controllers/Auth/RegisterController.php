@@ -68,10 +68,10 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         \DB::beginTransaction();
-        
+
         try {
             $role = getRoleByGuard($this->guardName);
-            
+
             $user = User::create([
                 'name' => $data['name'],
                 'email' => $data['email'],

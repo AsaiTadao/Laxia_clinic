@@ -36,6 +36,7 @@ Route::group(['middleware' => 'guest:api'], function () {
 
   Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
   Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+  Route::post('register/detail', 'ProfileController@registerDetail');
 
   // Route::post('email/verify/{user}', 'Auth\VerificationController@verify')->name('verification.verify');
   // Route::post('email/resend', 'Auth\VerificationController@resend');
@@ -45,7 +46,7 @@ Route::group(['middleware' => 'guest:api'], function () {
 });
 
 Route::group(['middleware' => ['auth.patient']], function() {
-  Route::post('register/detail', 'ProfileController@registerDetail');
+  Route::get('invite', 'ProfileController@invite');
   Route::get('me', 'ProfileController@me');
   Route::get('search', 'SearchController@search');
   Route::get('midsearch', 'SearchController@midsearch');

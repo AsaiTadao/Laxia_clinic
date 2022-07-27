@@ -9,6 +9,7 @@ final class PointType extends BaseEnum
     const USER_NEW_REGISTERED = "user_new_registered";
     const RESERVATION_FINISHED = "reservation_finished";
     const USER_INVITATION = "user_invitation";
+    const USER_IIVITE = "user_invite";
 
     public static function asList(): array {
         return [
@@ -16,6 +17,7 @@ final class PointType extends BaseEnum
             self::USER_NEW_REGISTERED => "user_new_registered",
             self::RESERVATION_FINISHED => "reservation_finished",
             self::USER_INVITATION => "user_invitation",
+            self::USER_IIVITE => "user_invite",
         ];
     }
 }

@@ -8,6 +8,8 @@ use App\Models\Attachment;
 use DB;
 use Auth;
 use Throwable;
+use App\Models\PointHistory;
+use App\Enums\Common\PointType;
 
 /**
  * Class ProfileService
@@ -35,6 +37,7 @@ class ProfileService
       'diaries.medias',
       'categories',
       'counselings.medias',
+      'counselings.categories',
       'favoriteDiaries.medias',
       'favoriteQuestions.medias',
       'favoriteDoctors',
@@ -44,5 +47,40 @@ class ProfileService
     ])
     ->where('id', $id)
     ->firstOrFail();
+  }
+  public function invite($id,$code){
+    $currentUser = auth()->guard('patient')->user();
+    $patient=Patient::where('unique_id',$code)->first();
+    $isHis=PointHistory::where([
+        ['patient_id','=',$patient->id],
+        ['type_id','=',$currentUser->id]
+    ])->first();
+    if($isHis){
+        return response()->json([
+            'status' => 0
+        ]);
+    }
+    if($patient){
+        PointHistory::create([
+            'patient_id' => $patient->id,
+            'type' => PointType::USER_INVITATION,
+            'type_id' => $currentUser->id,
+            'use_point' => config('constants.user_invitation')
+        ]);
+        PointHistory::create([
+            'patient_id' => $currentUser->patient->id,
+            'type' => PointType::USER_IIVITE,
+            'type_id' => $patient->user_id,
+            'use_point' => config('constants.user_invitation')
+        ]);
+        $patient->increment('point',config('constants.user_invitation'));
+        $currentUser->patient->increment('point',config('constants.user_invitation'));
+        return response()->json([
+            'status' => 1,
+        ]);
+    }
+    return response()->json([
+        'status' => 1
+    ]);
   }
 }

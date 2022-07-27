@@ -65,7 +65,7 @@ class RegisterController extends Controller
         $user = User::where('email', $data['email'])
             ->where('is_active', 0)
             ->first();
-        
+
         if (isset($user)) {
             $user->delete();
         }
@@ -99,7 +99,7 @@ class RegisterController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function register(Request $request, $unique_id = null)
-    {   
+    {
         $validator = $this->validator($request->all());
 
         if ($validator->fails()) {
@@ -164,11 +164,11 @@ class RegisterController extends Controller
                 'is_active' => 1,
             ]);
         }
-            
+
         Auth::guard('patient')->setToken(
             $token = Auth::guard('patient')->login($user)
         );
-        
+
         return response()->json([
             'status' => 1,
             'data' => [
@@ -188,7 +188,7 @@ class RegisterController extends Controller
         if (!$user) {
             return abort('404');
         }
-        
+
         \DB::beginTransaction();
         try {
             $attrs = [
