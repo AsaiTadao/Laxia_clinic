@@ -156,22 +156,25 @@ class DiaryService
       ];
     }
     $diary->menus()->sync($menuPivot);
-
-    $mediaAttrs = Arr::get($attributes, 'before_medias');
-    foreach ($mediaAttrs as $id)
-    {
-      $media = Media::find($id);
-      $media->type=0;
-      if (!$media) continue;
-      $diary->medias()->save($media);
+    if(isset($attributes['before_medias'])){
+        $mediaAttrs = Arr::get($attributes, 'before_medias');
+        foreach ($mediaAttrs as $id)
+        {
+        $media = Media::find($id);
+        $media->type=0;
+        if (!$media) continue;
+        $diary->medias()->save($media);
+        }
     }
-    $mediaAttrs = Arr::get($attributes, 'after_medias');
-    foreach ($mediaAttrs as $id)
-    {
-      $media = Media::find($id);
-      $media->type=1;
-      if (!$media) continue;
-      $diary->medias()->save($media);
+    if(isset($attributes['after_medias'])){
+        $mediaAttrs = Arr::get($attributes, 'after_medias');
+        foreach ($mediaAttrs as $id)
+        {
+        $media = Media::find($id);
+        $media->type=1;
+        if (!$media) continue;
+        $diary->medias()->save($media);
+        }
     }
     $textQustionAttrs = Arr::get($attributes, 'diary_tqs');
     foreach ($textQustionAttrs as $key => $val)
@@ -181,7 +184,6 @@ class DiaryService
 
     return $diary->load([
         'categories',
-        'medias',
         'menus',
         // 'rate_questions',
         'text_questions',

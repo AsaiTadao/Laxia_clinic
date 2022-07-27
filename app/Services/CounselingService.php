@@ -102,23 +102,25 @@ class CounselingService
   {
     $counselingAttrs = Arr::get($attributes, 'counselings');
     $cateArr = Arr::get($attributes, 'categories');
-    $mediaArr = Arr::get($attributes, 'medias');
+
     $questionArr = Arr::get($attributes, 'questions');
 
     $data = array_merge($counselingAttrs, $addtional);
     $counseling = CounselingReport::create($data);
 
     $counseling->categories()->sync($cateArr);
-
-    foreach ($mediaArr as $key => $ids)
-    {
-      foreach ($ids as $id)
-      {
-        $media = Media::find($id);
-        if (!$media) continue;
-        $media->update(['category' => $key]);
-        $counseling->medias()->save($media);
-      }
+    if(isset($attributes['medias'])){
+        $mediaArr = Arr::get($attributes, 'medias');
+        foreach ($mediaArr as $key => $ids)
+        {
+            foreach ($ids as $id)
+            {
+                $media = Media::find($id);
+                if (!$media) continue;
+                $media->update(['category' => $key]);
+                $counseling->medias()->save($media);
+            }
+        }
     }
 
     foreach ($questionArr as $item)
