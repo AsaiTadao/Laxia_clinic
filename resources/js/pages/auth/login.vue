@@ -25,7 +25,7 @@
             </div>
           </div>
           <div class="auth--forget">
-              <router-link :to="{ name: 'password.request' }">
+              <router-link :to="{ name: 'password.request' }">  
                 パスワードを忘れた場合
               </router-link>
           </div>

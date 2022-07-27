@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\User\Auth;
 
+use App\Mail\UserVerifyEmail;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
@@ -42,5 +44,22 @@ class ForgotPasswordController extends Controller
     protected function sendResetLinkFailedResponse(Request $request, $response)
     {
         return response()->json(['email' => trans($response)], 400);
+    }
+    protected function sendResetLinkEmail(){
+        $details = [
+            'email' => [
+                'verify'=>"queeNbee90125@gmail.com"
+            ],
+            'confirmation_code' => 'passwprd.sent'
+        ];
+        // \Mail::to('queeNbee90125@gmail.com')->send(new UserVerifyEmail($details));
+        // return new JsonResponse(
+        //     [
+        //         'success' => true, 
+        //         'message' => "Thank you for subscribing to our email, please check your inbox"
+        //     ], 
+        //     200
+        // );
+        return response()->json(['send_flag' => 'successed'], 200);
     }
 }

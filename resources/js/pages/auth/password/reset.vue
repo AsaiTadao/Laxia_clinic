@@ -84,7 +84,7 @@ export default {
   }),
 
   mounted(){
-    this.form.token=this.$route.params.token;
+    this.form.token=this.$route.query.token;
     this.form.email=this.$route.query.email;
   },
 
@@ -113,7 +113,8 @@ export default {
 
     async reset () {
       try{
-        const { data } = await this.form.post('/api/user/password/reset')
+        
+        const { data } = await this.form.post('/api/clinic/password/reset')
         console.log(data);
 
         if(data.reset_flag == 'successed') this.$refs.confirmPassword.show();
