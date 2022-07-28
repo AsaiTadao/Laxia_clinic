@@ -45,16 +45,13 @@ class ForgotPasswordController extends Controller
     {
         return response()->json(['email' => trans($response)], 400);
     }
-    protected function sendResetLinkEmail(){
+    protected function sendResetLinkEmail(Request $request){
         $details = [
-            'email' => [
-                'verify'=>"queeNbee90125@gmail.com"
-            ],
-            'confirmation_code' => 'passwprd.sent'
+            'confirmation_code' => 'password.sent'
         ];
-        // \Mail::to('queeNbee90125@gmail.com')->send(new UserVerifyEmail($details));
+        \Mail::to($request['email'])->send(new UserVerifyEmail($details));
         // return new JsonResponse(
-        //     [
+        //     [ 
         //         'success' => true, 
         //         'message' => "Thank you for subscribing to our email, please check your inbox"
         //     ], 
