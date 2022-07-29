@@ -118,8 +118,62 @@ class CounselingController extends Controller
         ], 200);
     }
 
-    public function update(MenuRequest $request, $id)
+    public function update(Request $request, $id)
     {
+        // return $request->all()
+        $counceling = CounselingReport::find($id);
+        if(empty($counceling))
+            return response()->json([
+                'status' => 0,
+                'message' => 'エラーが発生しました。',
+                'errors' => ''
+            ]);
+
+        // $this->authorize($counceling);
+        $validator = Validator::make($request->all(), [
+            'counselings' => 'required|array',
+            'counselings.clinic_id' => 'required|integer|exists:clinics,id',
+            'counselings.doctor_id' => 'required|integer|exists:doctors,id',
+            'counselings.counseling_date' => 'required|date',
+            'counselings.content' => 'required|string',
+            'counselings.reason' => 'nullable|string',
+            'counselings.before_counseling' => 'required|string',
+            'counselings.after_ccounseling' => 'nullable|string',
+            'counselings.rate' => 'required|integer',
+            'categories' => 'required|array',
+            'medias' => 'nullable|array',
+            'medias.self' => 'nullable|array',
+            'medias.like' => 'nullable|array',
+            'medias.dislike' => 'nullable|array',
+            'questions' => 'nullable|array',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 0,
+                'message' => 'エラーが発生しました。',
+                'errors' => $validator->getMessageBag()->toArray()
+            ]);
+        }
+
+        \DB::beginTransaction();
+        try {
+            $counseling = $this->service->update($request->all(), ['id' => $counceling->id]);
+
+            \DB::commit();
+        } catch (\Throwable $e) {
+            \DB::rollBack();
+            \Log::error($e->getMessage());
+
+            return response()->json([
+                'message' => 'メニューを登録できません。'
+            ], 500);
+        }
+        return response()->json([
+            'status' => 1,
+            'data' => [
+                'counseling' => $counseling
+            ]
+        ], 200);
     }
 
     public function toggleLike(CounselingReport $counseling)

@@ -192,6 +192,7 @@ class DiaryService
 
   public function update($attributes, $where)
   {
+    
     $diary = Diary::where($where)->firstOrFail();
 
     $diaryAttrs = Arr::get($attributes, 'diaries');
@@ -210,27 +211,36 @@ class DiaryService
 
     $categoryAttrs = Arr::get($attributes, 'categories');
     $diary->categories()->sync($categoryAttrs);
-
     $menuAttrs = Arr::get($attributes, 'menus');
-    $diary->menus()->sync($menuAttrs);
-
-    $diary->medias()->delete();
-    $mediaAttrs = Arr::get($attributes, 'medias');
-    $mediaAttrs = Arr::get($attributes, 'before_medias');
-    foreach ($mediaAttrs as $id)
-    {
-      $media = Media::find($id);
-      $media->type=0;
-      if (!$media) continue;
-      $diary->medias()->save($media);
+    $menuPivot = [];
+    foreach ($menuAttrs as $item) {
+      $menuPivot[$item['id']] = [
+        'cost' => $item['cost']
+      ];
     }
-    $mediaAttrs = Arr::get($attributes, 'after_medias');
-    foreach ($mediaAttrs as $id)
-    {
-      $media = Media::find($id);
-      $media->type=1;
-      if (!$media) continue;
-      $diary->medias()->save($media);
+    $diary->menus()->sync($menuPivot);
+    $diary->medias()->update([
+      'mediable_type'=>""
+    ]);
+    if(isset($attributes['before_medias'])){
+        $mediaAttrs = Arr::get($attributes, 'before_medias');
+        foreach ($mediaAttrs as $id)
+        {
+        $media = Media::find($id);
+        $media->type=0;
+        if (!$media) continue;
+        $diary->medias()->save($media);
+        }
+    }
+    if(isset($attributes['after_medias'])){
+        $mediaAttrs = Arr::get($attributes, 'after_medias');
+        foreach ($mediaAttrs as $id)
+        {
+        $media = Media::find($id);
+        $media->type=1;
+        if (!$media) continue;
+        $diary->medias()->save($media);
+        }
     }
     // $diary->rate_questions()->sync([]);
     // $rateQustionAttrs = Arr::get($attributes, 'diary_rqs');

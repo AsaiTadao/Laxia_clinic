@@ -124,7 +124,11 @@ class RsvService
       [ 'reservation_id' => $rsv->id ],
       $payAttrs
     );
-
+    $data['status']=25;
+    $rsv = Reservation::updateOrCreate(
+      [ 'id' => $rsv->id ],
+      $data
+    );
     return $rsv->load(['patient', 'doctor', 'clinic', 'payments', 'mailbox']);
   }
 

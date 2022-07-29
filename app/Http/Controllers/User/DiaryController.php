@@ -91,7 +91,7 @@ class DiaryController extends Controller
                     'text_questions',
                     // 'rate_questions',
                     // 'clinic',
-                    // 'doctor',
+                    'doctor',
                     'medias',
                     'beforemedias',
                     'aftermedias',
@@ -154,6 +154,7 @@ class DiaryController extends Controller
 
     public function update(Request $request, $diary_id)
     {
+        // return $request->all();
         $diary = Diary::find($diary_id);
         if(empty($diary))
             return response()->json([
