@@ -3,7 +3,7 @@
     <div class="auth--wrapper">
       <div class="auth--form newpass-form">
         <form @submit.prevent="reset" @keydown="form.onKeydown($event)">
-          <h2 class="auth--title new-pass-title">新しいパスワードを設定してください</h2>       
+          <h2 class="auth--title new-pass-title">新しいパスワードを設定してください</h2>
           <!-- Email -->
           <div class="form-group">
             <label class="col-form-label text-md-right">{{ $t('新しいパスワード') }}</label>
@@ -23,7 +23,7 @@
               <has-error :form="form" field="repassword" />
             </div>
           </div>
-          
+
           <input v-model="form.email" type="hidden" name="email">
           <input v-model="form.token" type="hidden" name="token">
 
@@ -101,7 +101,7 @@ export default {
       const repassword = document.querySelector('#repassword');
       const type = repassword.getAttribute('type') === 'password' ? 'text' : 'password';
       repassword.setAttribute('type', type);
-      toggleRePassword.classList.toggle('bi-eye-slash');  
+      toggleRePassword.classList.toggle('bi-eye-slash');
     },
     showModal() {
       this.$refs.confirmPassword.show();
@@ -113,7 +113,7 @@ export default {
 
     async reset () {
       try{
-        
+
         const { data } = await this.form.post('/api/clinic/password/reset')
         console.log(data);
 

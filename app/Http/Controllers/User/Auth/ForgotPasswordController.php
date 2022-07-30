@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Passwordnewset;
+use Illuminate\Support\Facades\Hash;
 
 class ForgotPasswordController extends Controller
 {
@@ -46,15 +49,24 @@ class ForgotPasswordController extends Controller
         return response()->json(['email' => trans($response)], 400);
     }
     protected function sendResetLinkEmail(Request $request){
+        $user=User::where('email',$request['email'])->first();
+        if($user){
+            $permitted_chars = 'abcdefghijklmnopqrstuvwxyz';
+            $token=substr(str_shuffle($permitted_chars), 0, 5);
+            $data=new Passwordnewset;
+            $data->type_id=$user->id;
+            $data->token=Hash::make($token);
+            $data->save();
+        }
         $details = [
-            'confirmation_code' => 'password.sent'
+            'confirmation_code' => Hash::make($token)
         ];
         \Mail::to($request['email'])->send(new UserVerifyEmail($details));
         // return new JsonResponse(
-        //     [ 
-        //         'success' => true, 
+        //     [
+        //         'success' => true,
         //         'message' => "Thank you for subscribing to our email, please check your inbox"
-        //     ], 
+        //     ],
         //     200
         // );
         return response()->json(['send_flag' => 'successed'], 200);

@@ -35,6 +35,9 @@ class Category extends Model
   {
     return $this->children()->with('allChildren');
   }
+  public function menus(){
+    return $this->belongsToMany(Question::class, 'question_categories', 'category_id', 'question_id');
+  }
 
   public function descendantsAndSelf()
   {

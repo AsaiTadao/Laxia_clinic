@@ -76,6 +76,7 @@ Route::group(['middleware' => ['auth.patient']], function() {
 
   // カウンセレポ
   Route::get('counselings/{counseling}', 'CounselingController@get');
+  Route::put('counselings/{counseling}', 'CounselingController@update');
   Route::post('counselings/{counseling}/toggleLike', 'CounselingController@toggleLike');
   Route::post('counselings/{counseling}/toggleFavorite', 'CounselingController@toggleFavorite');
   Route::get('counselings/{counseling}/comments', 'CounselingController@indexComments');

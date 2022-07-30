@@ -119,6 +119,7 @@ class RsvService
   public function updatePayment($attrs, $where)
   {
     $payAttrs = Arr::get($attrs, 'payments');
+    $payAttrs['status']=25;
     $rsv = Reservation::where($where)->firstOrFail();
     $payment = Payment::updateOrCreate(
       [ 'reservation_id' => $rsv->id ],

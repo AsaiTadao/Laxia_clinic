@@ -144,5 +144,46 @@ class CounselingService
 
   public function update($attributes, $where)
   {
+    $counseling =CounselingReport::where($where)->firstOrFail();
+    $counselingAttrs = Arr::get($attributes, 'counselings');
+    $cateArr = Arr::get($attributes, 'categories');
+    $questionArr = Arr::get($attributes, 'questions');
+    $counseling->update($counselingAttrs);
+
+    $counseling->categories()->sync($cateArr);
+    $counseling->medias()->update([
+        'mediable_type'=>""
+      ]);
+    if(isset($attributes['medias'])){
+        $mediaArr = Arr::get($attributes, 'medias');
+        foreach ($mediaArr as $key => $ids)
+        {
+            foreach ($ids as $id)
+            {
+                $media = Media::find($id);
+                if (!$media) continue;
+                $media->update(['category' => $key]);
+                $counseling->medias()->save($media);
+            }
+        }
+    }
+    $counseling->questions()->delete();
+    foreach ($questionArr as $item)
+    {
+      $counseling->questions()->create([
+        'question' => $item['question'],
+        'answer' => $item['answer'],
+      ]);
+    }
+
+    return $counseling->load([
+      'categories',
+      'mediaSelf',
+      'mediaLike',
+      'mediaDislike',
+      'questions'
+    ]);
+
+    return $counseling;
   }
 }

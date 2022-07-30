@@ -152,8 +152,7 @@ class DiaryController extends Controller
         ], 200);
     }
 
-    public function update(Request $request, $diary_id)
-    {
+    public function update(Request $request, $diary_id){
         $diary = Diary::find($diary_id);
         if(empty($diary))
             return response()->json([
@@ -200,7 +199,7 @@ class DiaryController extends Controller
             \Log::error($e->getMessage());
 
             return response()->json([
-                'message' => 'エラーが発生しました。'
+                'message' => $e->getMessage()
             ], 500);
         }
 
