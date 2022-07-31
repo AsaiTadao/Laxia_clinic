@@ -218,15 +218,6 @@ class DiaryController extends Controller
     public function storeProgress(Request $request, Diary $diary)
     {
         $currentUser = auth()->guard('patient')->user();
-
-        if ($diary->patient_id != $currentUser->patient->id) {
-            return response()->json([
-                'status' => 0,
-                'message' => '権限がありません。',
-                'errors' => $validator->getMessageBag()->toArray()
-            ]);
-        }
-
         $validator = Validator::make($request->all(), [
             'progresses' => 'required|array',
             'progresses.from_treat_day' => 'required|integer',
@@ -234,7 +225,13 @@ class DiaryController extends Controller
             'medias' => 'nullable|array',
             'status' => 'required|array'
         ]);
-
+        if ($diary->patient_id != $currentUser->patient->id) {
+            return response()->json([
+                'status' => 0,
+                'message' => '権限がありません。',
+                'errors' => $validator->getMessageBag()->toArray()
+            ]);
+        }
         if ($validator->fails()) {
             return response()->json([
                 'status' => 0,
@@ -307,7 +304,7 @@ class DiaryController extends Controller
             ]
         ], 200);
     }
-    
+
     public function toggleLike($diary_id)
     {
         $diary = Diary::find($diary_id);

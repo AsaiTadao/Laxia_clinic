@@ -270,15 +270,16 @@ class DiaryService
     $progressAttrs = Arr::get($attributes, 'progresses');
     $progressAttrs = array_merge($progressAttrs, $additional);
     $progress = TreatProgress::create($progressAttrs);
-
-    $mediaAttrs = Arr::get($attributes, 'medias');
-    foreach ($mediaAttrs as $id)
+    if(isset($attributes['medias']))
     {
-      $media = Media::find($id);
-      if (!$media) continue;
-      $progress->medias()->save($media);
+        $mediaAttrs = Arr::get($attributes, 'medias');
+        foreach ($mediaAttrs as $id)
+        {
+        $media = Media::find($id);
+        if (!$media) continue;
+        $progress->medias()->save($media);
+        }
     }
-
     $statusAttrs = Arr::get($attributes, 'status');
     foreach ($statusAttrs as $key => $value)
     {
