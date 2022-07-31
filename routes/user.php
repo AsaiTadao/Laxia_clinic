@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('load/master', 'MasterDataController@loadMasterData');
 Route::get('load/master/part/{id}', 'MasterDataController@loadMasterPartData');
+Route::get('load/master/partmenu', 'MasterDataController@menulist');
 Route::get('load/master/{id}', 'MasterDataController@loadMasterDataIndex');
 Route::get('menus', 'MenuController@index');
 Route::get('clinics', 'ClinicController@search');

@@ -12,6 +12,7 @@ use App\Services\ClinicService;
 use App\Http\Resources\User\Doctor as DoctorResource;
 use App\Models\Stuff;
 
+
 class MasterDataController extends Controller
 {
 
@@ -122,7 +123,17 @@ class MasterDataController extends Controller
             'data' => $this->prefService->getClinicsAreas(),
         ]);
     }
-
+    public function menulist()
+    {
+        $partCategories = $this->categoryService->toArrayParent();
+        foreach($partCategories as &$category){
+            $category['menus']=$this->categoryService->menulist($category['id']);
+        }
+        return response()->json([
+            'status' => 1,
+            'data' => $partCategories,
+        ]);
+    }
     public function getRecommend()
     {
         $currentUser = auth()->guard('patient')->user();

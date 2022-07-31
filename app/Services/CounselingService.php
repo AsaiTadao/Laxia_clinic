@@ -144,6 +144,7 @@ class CounselingService
 
   public function update($attributes, $where)
   {
+    // return true;
     $counseling =CounselingReport::where($where)->firstOrFail();
     $counselingAttrs = Arr::get($attributes, 'counselings');
     $cateArr = Arr::get($attributes, 'categories');
@@ -183,7 +184,5 @@ class CounselingService
       'mediaDislike',
       'questions'
     ]);
-
-    return $counseling;
   }
 }

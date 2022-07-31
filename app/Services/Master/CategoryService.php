@@ -4,6 +4,7 @@ namespace App\Services\Master;
 use Illuminate\Support\Arr;
 use App\Models\Master\Category;
 use App\Models\Master\PartCategory;
+use App\Models\Menu;
 use DB;
 use Auth;
 use Throwable;
@@ -18,6 +19,11 @@ class CategoryService
   {
     return Category::whereNull('parent_id')
       ->with('allChildren')
+      ->get();
+  }
+  public function toArrayParent()
+  {
+    return Category::whereNull('parent_id')
       ->get();
   }
   public function midSearch($search){
@@ -51,5 +57,15 @@ class CategoryService
     return Category::where('parent_id',$id)
       ->with('allChildren')
       ->get();
+  }
+  public function menulist($id){
+    $query=Menu::query()
+    ->with([
+        'categories'
+    ]);
+    $query->whereHas('categories', function($subquery) use ($id) {
+        $subquery->where('mtb_part_categories.parent_id', $id);
+      });
+    return $query->get();
   }
 }

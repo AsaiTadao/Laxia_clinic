@@ -120,6 +120,7 @@ class CounselingController extends Controller
 
     public function update(Request $request, $id)
     {
+        // return $request->all()
         $counceling = CounselingReport::find($id);
         if(empty($counceling))
             return response()->json([
@@ -164,7 +165,7 @@ class CounselingController extends Controller
             \Log::error($e->getMessage());
 
             return response()->json([
-                'message' => $e->getMessage()
+                'message' => 'メニューを登録できません。'
             ], 500);
         }
         return response()->json([

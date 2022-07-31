@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Enums\Reservation\Status;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -10,6 +11,7 @@ use App\Services\Master\DiaryMasterService;
 use App\Services\ViewService;
 use App\Services\CommentService;
 use App\Models\Diary;
+use App\Models\Master\Category;
 
 class DiaryController extends Controller
 {
@@ -91,7 +93,7 @@ class DiaryController extends Controller
                     'text_questions',
                     // 'rate_questions',
                     // 'clinic',
-                    // 'doctor',
+                    'doctor',
                     'medias',
                     'beforemedias',
                     'aftermedias',
@@ -152,7 +154,9 @@ class DiaryController extends Controller
         ], 200);
     }
 
-    public function update(Request $request, $diary_id){
+    public function update(Request $request, $diary_id)
+    {
+        // return $request->all();
         $diary = Diary::find($diary_id);
         if(empty($diary))
             return response()->json([
@@ -303,7 +307,7 @@ class DiaryController extends Controller
             ]
         ], 200);
     }
-
+    
     public function toggleLike($diary_id)
     {
         $diary = Diary::find($diary_id);

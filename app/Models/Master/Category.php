@@ -4,6 +4,7 @@ namespace App\Models\Master;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use App\Models\Menu;
 
 class Category extends Model
 {
@@ -36,7 +37,7 @@ class Category extends Model
     return $this->children()->with('allChildren');
   }
   public function menus(){
-    return $this->belongsToMany(Question::class, 'question_categories', 'category_id', 'question_id');
+    return $this->belongsToMany(Menu::class, 'menu_categories', 'category_id', 'menu_id');
   }
 
   public function descendantsAndSelf()

@@ -192,6 +192,7 @@ class DiaryService
 
   public function  update($attributes, $where)
   {
+
     $diary = Diary::where($where)->firstOrFail();
 
     $diaryAttrs = Arr::get($attributes, 'diaries');
@@ -210,7 +211,6 @@ class DiaryService
 
     $categoryAttrs = Arr::get($attributes, 'categories');
     $diary->categories()->sync($categoryAttrs);
-
     $menuAttrs = Arr::get($attributes, 'menus');
     $menuPivot = [];
     foreach ($menuAttrs as $item) {
@@ -220,9 +220,8 @@ class DiaryService
     }
     $diary->menus()->sync($menuPivot);
     $diary->medias()->update([
-        'mediable_type'=>""
-      ]);
-    // $mediaAttrs = Arr::get($attributes, 'medias');
+      'mediable_type'=>""
+    ]);
     if(isset($attributes['before_medias'])){
         $mediaAttrs = Arr::get($attributes, 'before_medias');
         foreach ($mediaAttrs as $id)
