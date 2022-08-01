@@ -17,8 +17,10 @@ class PrefService
 {
   public function toArray()
   {
-    return Pref::all()
-      ->pluck('name', 'id')
+    return Pref::query()->with([
+        'cities.towns'
+    ])->get()
+    //   ->pluck('name', 'id')
       ->toArray();
   }
 

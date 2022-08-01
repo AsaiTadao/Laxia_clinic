@@ -1,5 +1,27 @@
 <template>
   <div class="main-in">
+    <vue-html2pdf
+      :show-layout="controlValue.showLayout"
+      :float-layout="controlValue.floatLayout"
+      :enable-download="controlValue.enableDownload"
+      :preview-modal="controlValue.previewModal"
+      :filename="controlValue.filename"
+      :paginate-elements-by-height="controlValue.paginateElementsByHeight"
+      :pdf-quality="controlValue.pdfQuality"
+      :pdf-format="controlValue.pdfFormat"
+      :pdf-orientation="controlValue.pdfOrientation"
+      :pdf-content-width="controlValue.pdfContentWidth"
+      :manual-pagination="controlValue.manualPagination"
+      :html-to-pdf-options="htmlToPdfOptions"
+      @progress="onProgress($event)"
+      @startPagination="startPagination()"
+      @hasPaginated="hasPaginated()"
+      @beforeDownload="beforeDownload($event)"
+      @hasDownloaded="hasDownloaded($event)"
+      ref="html2Pdf"
+    >
+      <pdf-content @domRendered="domRendered()" slot="pdf-content" />
+    </vue-html2pdf>
     <div class="main-content">
       <div v-if="current" class="payment">
         <div>
@@ -12,7 +34,7 @@
           <div>
             <p class="payment-ttl">{{ past_month }}月払い戻し金額</p>
             <div class="refund-calc">
-              <strong>30000円</strong>
+              <strong>{{ current.funding | currency }}</strong>
             </div>
           </div>
         </div>
@@ -57,7 +79,7 @@
           v-if="pageInfo"
           :page="query.page"
           :page-count="pageInfo.last_page"
-          :click-handler="handlePaginate" /> 
+          :click-handler="handlePaginate" />
       </div>
     </div>
   </div>
@@ -65,7 +87,6 @@
 
 <script>
 import axios from 'axios'
-
 export default {
   middleware: 'auth',
 
@@ -79,12 +100,27 @@ export default {
       },
       pageInfo: undefined,
       past_month: undefined,
+      controlValue:undefined,
     }
   },
 
   mounted() {
     this.past_month = this.$moment().subtract(1,'months').endOf('month').format('M');
     this.initData();
+    this.controlValue={
+      showLayout:false,
+      floatLayout:false,
+      controlValue:true,
+      previewModal:true,
+      filename:"billing_",
+      paginateElementsByHeight:1100,
+      pdfQuality:2,
+      pdfFormat:"a4",
+      pdfOrientation:"portrait",
+      pdfContentWidth:"false",
+      manualPagination:"false",
+      htmlToPdfOptions:"false",
+    }
   },
 
   methods: {
@@ -126,6 +162,37 @@ export default {
         page: pageNum,
       }
       this.getHistoryData()
+    },
+    onProgress(progress) {
+      this.progress = progress;
+      console.log(`PDF generation progress: ${progress}%`)
+    },
+
+    startPagination() {
+      console.log(`PDF has started pagination`)
+    },
+
+    hasPaginated () {
+      console.log(`PDF has been paginated`)
+    },
+
+    async beforeDownload ({ html2pdf, options, pdfContent }) {
+      console.log(`On Before PDF Generation`)
+    },
+
+    hasDownloaded (blobPdf) {
+      console.log(`PDF has downloaded yehey`)
+      this.pdfDownloaded = true
+      console.log(blobPdf)
+    },
+
+    domRendered() {
+      console.log("Dom Has Rendered");
+      this.contentRendered = true;
+    },
+
+    onBlobGenerate(blob) {
+      console.log(blob);
     },
   }
 }

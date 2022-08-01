@@ -76,7 +76,7 @@ class ReservationController extends Controller
             'rsv' => 'required|array',
             'rsv.clinic_id' => 'required|integer|exists:clinics,id',
             'rsv.doctor_id' => 'nullable|integer|exists:doctors,id',
-            'rsv.type' => 'required|integer',
+            // 'rsv.type' => 'required|integer',
             'rsv.hope_treat' => 'required|integer',
             // 'rsv.is_visited' => 'required|integer',
             'rsv.note' => 'nullable|string',

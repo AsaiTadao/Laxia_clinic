@@ -29,7 +29,7 @@
               <td>{{ payment.reservation.hope_treat ? hope_treat_types[payment.reservation.hope_treat] : '' }}</td>
               <td>{{ payment.reservation.doctor ? payment.reservation.doctor.kata_name : '' }}</td>
               <td>{{ payment.reservation.use_point.toLocaleString() }}</td>
-              <td>{{ payment.total_price | currency }}</td>
+              <td>{{ payment.treat_price | currency }}</td>
             </tr>
           </tbody>
         </table>

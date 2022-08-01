@@ -46,7 +46,7 @@ export const getters = {
 export const mutations = {
   [types.SAVE_RSV_STATUS_TYPES] (state, { rsv_status_types }) {
     state.rsv_status_types = Object.keys(rsv_status_types)
-      .filter(key => key <= 20)
+      .filter(key => key <= 25)
       .reduce((obj, key) => {
         return {
           ...obj,

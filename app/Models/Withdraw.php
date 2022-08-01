@@ -24,15 +24,29 @@ class Withdraw extends Model
     'price',
     'tax',
     'system_fee',
-    'paid_at'
+    'paid_at',
+    'point'
   ];
 
   protected $appends = [
-    'total'
+    'total',
+    'funding'
   ];
 
   public function getTotalAttribute()
   {
-      return floor($this->price * $this->tax / 100) + $this->system_fee;
+      $total=floor($this->price * $this->tax / 100) + $this->system_fee-$this->point;
+      if($total>0){
+        return $total;
+      }
+      return 0;
+  }
+  public function getFundingAttribute()
+  {
+    $total=floor($this->price * $this->tax / 100) + $this->system_fee-$this->point;
+    if($total>0){
+      return 0;
+    }
+    return abs($total);
   }
 }

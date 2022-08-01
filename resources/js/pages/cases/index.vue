@@ -429,13 +429,13 @@ export default {
         wheelPropagation: false
       },
       ageOptions: [
-        {'val': 10, 'text': '10代'},
-        {'val': 20, 'text': '20代'},
-        {'val': 30, 'text': '30代'},
-        {'val': 40, 'text': '40代'},
-        {'val': 50, 'text': '50代'},
-        {'val': 60, 'text': '60代'},
-        {'val': 70, 'text': '70代'},
+        {'id': 10, 'text': '10代'},
+        {'id': 20, 'text': '20代'},
+        {'id': 30, 'text': '30代'},
+        {'id': 40, 'text': '40代'},
+        {'id': 50, 'text': '50代'},
+        {'id': 60, 'text': '60代'},
+        {'id': 70, 'text': '70代'},
       ]
     }
   },
@@ -817,7 +817,7 @@ export default {
     },
 
     selectedAge(selected_option) {
-      this.form.cases.patient_age = selected_option ? selected_option.val : null;
+      this.form.cases.patient_age = selected_option ? selected_option.id : null;
     },
 
     selectedGender(selected_option) {

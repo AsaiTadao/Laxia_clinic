@@ -56,7 +56,7 @@
               <div v-for="(item, index) in clinic.work_times" :key="index" class="work-time">
                 <p>{{ item.weekday }}</p>
                 <p v-if="item.type == null">未入力</p>
-                <p v-else-if="item.type == 0&&item.start_time!=null&&item.end_time!=null">{{ startTimeOptions.find(el => el.val ==item.start_time)['text']}} ~ {{ startTimeOptions.find(el => el.val ==item.end_time)['text']}}</p>
+                <p v-else-if="item.type == 0&&item.start_time!=null&&item.end_time!=null">{{ startTimeOptions.find(el => el.id ==item.start_time)['text']}} ~ {{ startTimeOptions.find(el => el.id ==item.end_time)['text']}}</p>
                 <p v-else-if="item.type == 0">未入力</p>
                 <p v-else>定休日</p>
               </div>
@@ -246,33 +246,33 @@
                   <option>北海道</option>
                 </select> -->
                 <c-select
-                  :options="addressOptions"
-                  :textkey="'text'"
+                  :options="prefs"
+                  :textkey="'name'"
                   :valkey="'val'"
                   :emptyable="true"
                   class="select"
                   ref="address"
-                  @change="selectedAdress"
+                  @change="selectedAdressPref"
               />
                 <i class="bi bi-chevron-left"></i>
                 <c-select
-                  :options="addressOptions"
-                  :textkey="'text'"
+                  :options="prefs[pref_id]['cities']"
+                  :textkey="'name'"
                   :valkey="'val'"
                   :emptyable="true"
                   class="select"
                   ref="address"
-                  @change="selectedAdress"
+                  @change="selectedAdressCity"
               />
                 <i class="bi bi-chevron-left"></i>
                 <c-select
-                  :options="addressOptions"
-                  :textkey="'text'"
+                  :options="prefs[pref_id]['cities'][city_id]['towns']"
+                  :textkey="'name'"
                   :valkey="'val'"
                   :emptyable="true"
                   class="select"
                   ref="address"
-                  @change="selectedAdress"
+                  @change="selectedAdressTown"
               />
               </div>
               <div><input type="text" v-model="form.clinic.addr02" placeholder="例：ABCビル 3階" :class="{'is-invalid' : errors && errors['clinic.addr02'] }"></div>
@@ -431,63 +431,61 @@ export default {
         title: '',
         confirmBtnTitle: '',
       },
-      cities: [],
-      towns: [],
+      city_id:undefined ,
+      pref_id: undefined,
       statusOptions: [
-        {'val': 0, 'text': '営業日'},
-        {'val': 1, 'text': '定休日'},
+        {'id': 0, 'text': '営業日'},
+        {'id': 1, 'text': '定休日'},
       ],
-      addressOptions: [
-        {'val': 0, 'text': '北海道'},
-      ],
+      addressOptions:undefined,
       startTimeOptions: [
-        {'val': 0, 'text': '0:00'},
-        {'val': 1, 'text': '0:30'},
-        {'val': 2, 'text': '1:00'},
-        {'val': 3, 'text': '1:30'},
-        {'val': 4, 'text': '2:00'},
-        {'val': 5, 'text': '2:30'},
-        {'val': 6, 'text': '3:00'},
-        {'val': 7, 'text': '3:30'},
-        {'val': 8, 'text': '4:00'},
-        {'val': 9, 'text': '4:30'},
-        {'val': 10, 'text': '5:00'},
-        {'val': 11, 'text': '5:30'},
-        {'val': 12, 'text': '6:00'},
-        {'val': 13, 'text': '7:00'},
-        {'val': 14, 'text': '7:30'},
-        {'val': 15, 'text': '8:00'},
-        {'val': 16, 'text': '8:30'},
-        {'val': 17, 'text': '9:00'},
-        {'val': 18, 'text': '9:30'},
-        {'val': 19, 'text': '10:00'},
-        {'val': 20, 'text': '10:30'},
-        {'val': 21, 'text': '11:00'},
-        {'val': 22, 'text': '11:30'},
-        {'val': 23, 'text': '12:00'},
-        {'val': 24, 'text': '12:30'},
-        {'val': 25, 'text': '13:00'},
-        {'val': 26, 'text': '13:30'},
-        {'val': 27, 'text': '14:00'},
-        {'val': 28, 'text': '14:30'},
-        {'val': 29, 'text': '15:00'},
-        {'val': 30, 'text': '15:30'},
-        {'val': 31, 'text': '16:00'},
-        {'val': 32, 'text': '16:30'},
-        {'val': 33, 'text': '17:00'},
-        {'val': 34, 'text': '17:30'},
-        {'val': 35, 'text': '18:00'},
-        {'val': 36, 'text': '18:30'},
-        {'val': 37, 'text': '19:00'},
-        {'val': 38, 'text': '19:30'},
-        {'val': 39, 'text': '20:00'},
-        {'val': 40, 'text': '20:30'},
-        {'val': 41, 'text': '21:00'},
-        {'val': 42, 'text': '21:30'},
-        {'val': 43, 'text': '22:00'},
-        {'val': 44, 'text': '22:30'},
-        {'val': 45, 'text': '23:00'},
-        {'val': 46, 'text': '23:30'},
+        {'id': 0, 'text': '0:00'},
+        {'id': 1, 'text': '0:30'},
+        {'id': 2, 'text': '1:00'},
+        {'id': 3, 'text': '1:30'},
+        {'id': 4, 'text': '2:00'},
+        {'id': 5, 'text': '2:30'},
+        {'id': 6, 'text': '3:00'},
+        {'id': 7, 'text': '3:30'},
+        {'id': 8, 'text': '4:00'},
+        {'id': 9, 'text': '4:30'},
+        {'id': 10, 'text': '5:00'},
+        {'id': 11, 'text': '5:30'},
+        {'id': 12, 'text': '6:00'},
+        {'id': 13, 'text': '7:00'},
+        {'id': 14, 'text': '7:30'},
+        {'id': 15, 'text': '8:00'},
+        {'id': 16, 'text': '8:30'},
+        {'id': 17, 'text': '9:00'},
+        {'id': 18, 'text': '9:30'},
+        {'id': 19, 'text': '10:00'},
+        {'id': 20, 'text': '10:30'},
+        {'id': 21, 'text': '11:00'},
+        {'id': 22, 'text': '11:30'},
+        {'id': 23, 'text': '12:00'},
+        {'id': 24, 'text': '12:30'},
+        {'id': 25, 'text': '13:00'},
+        {'id': 26, 'text': '13:30'},
+        {'id': 27, 'text': '14:00'},
+        {'id': 28, 'text': '14:30'},
+        {'id': 29, 'text': '15:00'},
+        {'id': 30, 'text': '15:30'},
+        {'id': 31, 'text': '16:00'},
+        {'id': 32, 'text': '16:30'},
+        {'id': 33, 'text': '17:00'},
+        {'id': 34, 'text': '17:30'},
+        {'id': 35, 'text': '18:00'},
+        {'id': 36, 'text': '18:30'},
+        {'id': 37, 'text': '19:00'},
+        {'id': 38, 'text': '19:30'},
+        {'id': 39, 'text': '20:00'},
+        {'id': 40, 'text': '20:30'},
+        {'id': 41, 'text': '21:00'},
+        {'id': 42, 'text': '21:30'},
+        {'id': 43, 'text': '22:00'},
+        {'id': 44, 'text': '22:30'},
+        {'id': 45, 'text': '23:00'},
+        {'id': 46, 'text': '23:30'},
       ]
     }
   },
@@ -504,7 +502,8 @@ export default {
   },
 
   mounted() {
-    this.getData()
+    this.getData();
+
   },
 
   filters: {
@@ -529,6 +528,17 @@ export default {
     },
 
     handleEditProfile() {
+      this.pref_id= this.clinic.pref_id!=null
+        ? this.prefs.find(el => el.id == this.clinic.pref_id).id
+        : 0;
+        for(var i=0;i<this.prefs[this.pref_id].cities.length;i++){
+          if(this.prefs[this.pref_id].cities[i].id==this.clinic.city_id){
+            this.city_id=i;
+            break;
+          }
+          if(i=this.prefs[this.pref_id].cities.length-1)
+            this.city_id=0;
+        }
       this.form = {
         ...this.tmp,
         clinic: { ...this.clinic },
@@ -661,25 +671,43 @@ export default {
 
     selectedStatus01(selected_option,tabindex) {
       if(selected_option!=null){
-        this.form.clinic.work_times[tabindex].type=selected_option.val;
+        this.form.clinic.work_times[tabindex].type=selected_option.id;
       console.log(selected_option);
       }
 
     },
 
-    selectedAdress(selected_option) {
+    selectedAdressPref(selected_option) {
       console.log(selected_option);
+      this.form.clinic.pref_id=selected_option.id;
+       this.pref_id=this.prefs.find(el => el.id == selected_option.id).id;
+       this.city_id=0;
     },
-
+    selectedAdressCity(selected_option) {
+      console.log(selected_option);
+      this.form.clinic.city_id=selected_option.id;
+      for(var i=0;i<this.prefs[this.pref_id].cities.length;i++){
+          if(this.prefs[this.pref_id].cities[i].id==selected_option.id){
+            this.city_id=i;
+            break;
+          }
+          if(i=this.prefs[this.pref_id].cities.length-1)
+            this.city_id=0;
+      }
+    },
+    selectedAdressTown(selected_option) {
+      console.log(selected_option);
+      this.form.clinic.town_id=selected_option.id;
+    },
     selectedStartTime(selected_option,tabindex) {
       if(selected_option!=null)
-      this.form.clinic.work_times[tabindex].start_time=selected_option.val;
+      this.form.clinic.work_times[tabindex].start_time=selected_option.id;
       console.log(selected_option);
     },
 
     selectedEndTime(selected_option,tabindex) {
       if(selected_option!=null)
-      this.form.clinic.work_times[tabindex].end_time=selected_option.val;
+      this.form.clinic.work_times[tabindex].end_time=selected_option.id;
       console.log(selected_option);
     },
   }

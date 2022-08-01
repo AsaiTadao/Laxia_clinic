@@ -65,7 +65,7 @@ export default {
     return {
 
       selected: this.default!=null
-        ? this.options.find(el => el.val == this.default)
+        ? this.options.find(el => el.id == this.default)
         : null,
       open: false,
     };

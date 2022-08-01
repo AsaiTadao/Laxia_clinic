@@ -26,7 +26,8 @@ class PaymentObserver
             'clinic_id' => $currentUser->id,
             'month' => $ym
         ]);
-        $withdraw->price += $payment->total_price;
+        $withdraw->price += ($payment->total_price-$payment->except_price);
+        $withdraw->point +=( $payment->total_price-$payment->except_price-$payment->treat_price);
         $withdraw->save();
 
         // ユーザーにポイント付与

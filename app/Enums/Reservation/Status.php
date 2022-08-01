@@ -9,7 +9,7 @@ final class Status extends BaseEnum
     // const MISSEDCALL = 10;
     const INPROGRESS = 15;
     // const APPROVED = 20;
-    // const VISITED = 25;
+    const VISITED = 25;
     // const HISTORY = 30;
 
     public static function asList(): array {
@@ -18,7 +18,7 @@ final class Status extends BaseEnum
             // self::MISSEDCALL => "不在着信",
             self::INPROGRESS => "日時確定",
             // self::APPROVED => "予約完了",
-            // self::VISITED => "予約完了",
+            self::VISITED => "予約完了",
             // self::HISTORY => "予約完了",
         ];
     }

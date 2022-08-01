@@ -132,7 +132,7 @@
               <div class="rsv-main-content">
                 <div>
                   <span>{{ $t("医師") }}</span>
-                  {{ selectedRsv.doctor && selectedRsv.doctor.name }}
+                  {{ selectedRsv.doctor && selectedRsv.doctor.hira_name }}
                 </div>
                 <div>
                   <span>{{ $t("予約内容") }}</span>
@@ -269,7 +269,7 @@
                   </select> -->
                   <c-select
                     :options="doctors"
-                    :textkey="'kata_name'"
+                    :textkey="'hira_name'"
                     :valkey="'id'"
                     :emptyable="true"
                     :default="rsv_form.reservations.doctor_id"
@@ -360,7 +360,7 @@
           </div>
           <div>
             <span>{{ $t("担当者") }}</span>
-            {{ selectedRsv.doctor && selectedRsv.doctor.kata_name }}
+            {{ selectedRsv.doctor && selectedRsv.doctor.hira_name }}
           </div>
         </div>
 
