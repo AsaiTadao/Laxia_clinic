@@ -1,6 +1,7 @@
 <template>
   <div class="main-in">
-    <vue-html2pdf
+    <div class="main-content">
+      <vue-html2pdf
       :show-layout="controlValue.showLayout"
       :float-layout="controlValue.floatLayout"
       :enable-download="controlValue.enableDownload"
@@ -22,7 +23,6 @@
     >
       <pdf-content @domRendered="domRendered()" slot="pdf-content" />
     </vue-html2pdf>
-    <div class="main-content">
       <div v-if="current" class="payment">
         <div>
           <div>
@@ -71,7 +71,7 @@
               <td>{{ item.system_fee | currency }}</td>
               <td>{{ 0 }}</td>
               <td>{{ (item.price * item.tax / 100 + item.system_fee) | currency }}</td>
-              <td><a href="" download>{{ $t('ダウンロード') }}</a></td>
+              <td><a href="#" @click="downloadPdf(item.month)">{{ $t('ダウンロード') }}</a></td>
             </tr>
           </tbody>
         </table>
@@ -100,27 +100,52 @@ export default {
       },
       pageInfo: undefined,
       past_month: undefined,
-      controlValue:undefined,
+      controlValue: {
+            showLayout: false,
+            floatLayout: true,
+            enableDownload: true,
+            previewModal: true,
+            paginateElementsByHeight: 1100,
+            manualPagination: false,
+            filename: 'billing',
+            pdfQuality: 2,
+            pdfFormat: 'a4',
+            pdfOrientation: 'portrait',
+            pdfContentWidth: '800px'
+        }
     }
   },
+  computed:{
+    htmlToPdfOptions() {
+      return {
+        margin: 0,
 
+        filename: "billing.pdf",
+
+        image: {
+          type: "jpeg",
+          quality: 0.98,
+        },
+
+        enableLinks: true,
+
+        html2canvas: {
+          scale: this.controlValue.pdfQuality,
+          useCORS: true,
+        },
+
+        jsPDF: {
+          unit: "in",
+          format: this.controlValue.pdfFormat,
+          orientation: this.controlValue.pdfOrientation,
+        },
+      };
+    },
+  },
   mounted() {
     this.past_month = this.$moment().subtract(1,'months').endOf('month').format('M');
     this.initData();
-    this.controlValue={
-      showLayout:false,
-      floatLayout:false,
-      controlValue:true,
-      previewModal:true,
-      filename:"billing_",
-      paginateElementsByHeight:1100,
-      pdfQuality:2,
-      pdfFormat:"a4",
-      pdfOrientation:"portrait",
-      pdfContentWidth:"false",
-      manualPagination:"false",
-      htmlToPdfOptions:"false",
-    }
+
   },
 
   methods: {
@@ -164,7 +189,7 @@ export default {
       this.getHistoryData()
     },
     onProgress(progress) {
-      this.progress = progress;
+      // this.progress = progress;
       console.log(`PDF generation progress: ${progress}%`)
     },
 
@@ -182,17 +207,22 @@ export default {
 
     hasDownloaded (blobPdf) {
       console.log(`PDF has downloaded yehey`)
-      this.pdfDownloaded = true
-      console.log(blobPdf)
+      // this.pdfDownloaded = true
+      // console.log(blobPdf)
     },
 
     domRendered() {
       console.log("Dom Has Rendered");
-      this.contentRendered = true;
+      // this.contentRendered = true;
     },
 
     onBlobGenerate(blob) {
       console.log(blob);
+    },
+    downloadPdf(value) {
+      this.controlValue.filename='billing('+value+')';
+      console.log(this.$refs.html2Pdf);
+      this.$refs.html2Pdf.generatePdf();
     },
   }
 }
