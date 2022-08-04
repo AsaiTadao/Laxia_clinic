@@ -23,11 +23,11 @@ class ClinicService
     $query = Clinic::query()
   ->with([
         'doctors'
-      ])->withCount([
-        'diaries'
       ])->leftJoinSub($diary_avg, 'diary_avg', function ($join) {
         $join->on('clinics.id', '=', 'diary_avg.clinic_id');
-      })->select('*');
+      })->select('*')->withCount([
+        'diaries'
+      ]);
     if (isset($search['q'])) {
       $query->where('name', 'LIKE', "%{$search['q']}%");
     }
