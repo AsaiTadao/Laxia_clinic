@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'guest:api'], function () {
   Route::post('login', 'Auth\LoginController@login');
   Route::post('register', 'Auth\RegisterController@register');
+  Route::post('update/email', 'ProfileController@updateEmail');
+  Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+  Route::post('update/password', 'ProfileController@updatePassword');
+
 });
 
 Route::group(['middleware' => ['auth.doctor']], function() {
@@ -28,8 +32,6 @@ Route::group(['middleware' => ['auth.doctor']], function() {
   Route::put('profile', 'ProfileController@update');
   Route::get('profile/{id}', 'ProfileController@getProfile');
   Route::post('profile/photoupload', 'ProfileController@uploadPhoto');
-  Route::post('update/email', 'ProfileController@updateEmail');
-  Route::post('update/password', 'ProfileController@updatePassword');
 
   // 質問
   Route::post('questions/search', 'QuestionController@search');
