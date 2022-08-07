@@ -61,7 +61,8 @@ class ForgotPasswordController extends Controller
             $data->save();
         }
         $details = [
-            'confirmation_code' => Hash::make($token)
+            'email'=>$request['email'],
+            'token' => Hash::make($token)
         ];
         \Mail::to($request['email'])->send(new UserVerifyEmail($details));
         // return new JsonResponse(

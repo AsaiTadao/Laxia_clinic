@@ -29,14 +29,14 @@ Route::get('cases', 'CaseController@index');
 
 // 検索
 
-
+Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 Route::group(['middleware' => 'guest:api'], function () {
   Route::post('login', 'Auth\LoginController@login');
   Route::post('login/sns', 'Auth\RegisterController@registerWithSocial');
   Route::post('register/email/{unique_id?}', 'Auth\RegisterController@register');
 
   Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
-  Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
   Route::post('register/detail', 'ProfileController@registerDetail');
 
   // Route::post('email/verify/{user}', 'Auth\VerificationController@verify')->name('verification.verify');

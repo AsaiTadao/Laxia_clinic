@@ -114,14 +114,12 @@ export default {
     async reset () {
       try{
 
-        const { data } = await this.form.post('/api/clinic/password/reset')
+        const { data } = await this.form.post('/api/user/password/reset')
         console.log(data);
 
-        if(data.reset_flag == 'successed') this.$refs.confirmPassword.show();
+        if(data.success == true) this.$refs.confirmPassword.show();
       } catch(e) {
-        if(e.response.status === 400) {
-          alert(e.response.data.email);
-        } else if(e.response.status !== 422) {
+        if(e.response.status !==400) {
           alert('操作が失敗しました。');
         }
       }

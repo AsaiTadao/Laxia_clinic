@@ -5,6 +5,9 @@ namespace App\Http\Controllers\User\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
+use App\Models\Passwordnewset;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class ResetPasswordController extends Controller
 {
@@ -44,6 +47,27 @@ class ResetPasswordController extends Controller
         return response()->json(['email' => trans($response)], 400);
     }
 
+    protected function reset(Request $request)
+    {
+        $user=User::where('email',$request['email'])->first();
+        if($user){
+            $query=Passwordnewset::query();
+            $query->where('type_id',$user->id);
+            $query->where('token', $request['token']);
+            $valid=$query->first();
+            if($valid){
+                $valid->delete();
+                $user->password=Hash::make($request['password']);
+                $user->save();
+                return response()->json([
+                    'success'=>true
+                ], 200);
+            }
+        }
+        return response()->json([
+            'success'=>false
+        ], 400);
+    }
     /**
      * Get the password reset validation rules.
      *
