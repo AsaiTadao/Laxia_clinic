@@ -21,7 +21,7 @@
       @hasDownloaded="hasDownloaded($event)"
       ref="html2Pdf"
     >
-      <pdf-content  @domRendered="domRendered()" :payments='payments' :past_month='month' :current='current' slot="pdf-content" />
+      <pdf-content  @domRendered="domRendered()" :payments='payments' :past_month='month' :current='pdfcurrent' slot="pdf-content" />
     </vue-html2pdf>
       <div v-if="current" class="payment">
         <div>

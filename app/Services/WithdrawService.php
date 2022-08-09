@@ -24,9 +24,9 @@ class WithdrawService
       $query->where('clinic_id', $clinicId);
     }
 
-    if (isset($search['is_paid']) && $search['is_paid']) {
-      $query->whereNotNull('paid_at');
-    }
+    // if (isset($search['is_paid']) && $search['is_paid']) {
+    //   $query->whereNotNull('paid_at');
+    // }
 
     // $query->orderby('created_at', 'desc');
     $query->orderby('month', 'desc');
