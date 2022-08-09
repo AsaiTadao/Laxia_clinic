@@ -73,6 +73,7 @@ Route::group(['middleware' => ['auth.clinic']], function() {
   Route::put('/{id}', 'ClinicController@update');
 
   Route::get('/payments', 'PaymentController@index');
+  Route::get('/pdfdownload', 'PaymentController@getDate');
   Route::get('/payments/common_data', 'PaymentController@commonData');
 
   Route::get('/withdarws', 'WithdrawController@index');

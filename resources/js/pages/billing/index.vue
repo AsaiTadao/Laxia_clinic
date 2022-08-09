@@ -1,7 +1,7 @@
 <template>
   <div class="main-in">
     <div class="main-content">
-      <vue-html2pdf
+      <vue-html2pdf v-if="current"
       :show-layout="controlValue.showLayout"
       :float-layout="controlValue.floatLayout"
       :enable-download="controlValue.enableDownload"
@@ -21,7 +21,7 @@
       @hasDownloaded="hasDownloaded($event)"
       ref="html2Pdf"
     >
-      <pdf-content @domRendered="domRendered()" slot="pdf-content" />
+      <pdf-content  @domRendered="domRendered()" :payments='payments' :past_month='month' :current='current' slot="pdf-content" />
     </vue-html2pdf>
       <div v-if="current" class="payment">
         <div>
@@ -69,7 +69,7 @@
               <td>{{ item.price | currency }}</td>
               <td>{{ item.tax }}%</td>
               <td>{{ item.system_fee | currency }}</td>
-              <td>{{ 0 }}</td>
+              <td>{{ item.point }}</td>
               <td>{{ (item.price * item.tax / 100 + item.system_fee) | currency }}</td>
               <td><a href="#" @click="downloadPdf(item.month)">{{ $t('ダウンロード') }}</a></td>
             </tr>
@@ -92,6 +92,9 @@ export default {
 
   data() {
     return {
+       payments: [],
+       month:'',
+       pdfcurrent:{},
       withdraws: [],
       current: undefined,
       query: {
@@ -105,8 +108,8 @@ export default {
             floatLayout: true,
             enableDownload: true,
             previewModal: true,
-            paginateElementsByHeight: 1100,
-            manualPagination: false,
+            paginateElementsByHeight: 998,
+            manualPagination: true,
             filename: 'billing',
             pdfQuality: 2,
             pdfFormat: 'a4',
@@ -118,10 +121,8 @@ export default {
   computed:{
     htmlToPdfOptions() {
       return {
-        margin: 0,
-
+        margin: [1,0],
         filename: "billing.pdf",
-
         image: {
           type: "jpeg",
           quality: 0.98,
@@ -210,7 +211,6 @@ export default {
       // this.pdfDownloaded = true
       // console.log(blobPdf)
     },
-
     domRendered() {
       console.log("Dom Has Rendered");
       // this.contentRendered = true;
@@ -220,9 +220,38 @@ export default {
       console.log(blob);
     },
     downloadPdf(value) {
+      this.$store.dispatch('state/setIsLoading');
+      this.month=value;
       this.controlValue.filename='billing('+value+')';
-      console.log(this.$refs.html2Pdf);
-      this.$refs.html2Pdf.generatePdf();
+      const qs = this.$utils.getQueryString(this.query);
+
+      return Promise.all([
+        axios.get(`/api/clinic/pdfdownload?date=${value}`),
+        axios.get(`/api/clinic/withdarws/${value}`)
+      ]).then(([res1, res2]) => {
+        this.payments = res1.data.payments;
+        this.pdfcurrent = res2.data.withdraw;
+         axios.get(`/api/clinic/pdfdownload?date=${value}`)
+          .then(res => {
+          })
+          .catch(error => {
+            this.$store.dispatch('state/removeIsLoading')
+          })
+      }).finally(() => {
+        this.$refs.html2Pdf.generatePdf();
+        this.$store.dispatch('state/removeIsLoading')
+      });
+
+      // axios.get(`/api/clinic/pdfdownload?date=${value}`)
+      //   .then(res => {
+      //     this.payments = res.data.payments;
+      //     this.$store.dispatch('state/removeIsLoading')
+      //   })
+      //   .catch(error => {
+      //     this.$store.dispatch('state/removeIsLoading')
+      //   })
+      // console.log(this.$refs.html2Pdf);
+
     },
   }
 }

@@ -33,7 +33,7 @@ class PaymentController extends Controller
         $currentUser = auth()->guard('api')->user();
         $params = $request->all();
         $params['clinic_id'] = $currentUser->clinic->id;
-        
+
         list($payments, $sum) = $this->service->paginate($params);
 
         return response()->json([
@@ -41,7 +41,18 @@ class PaymentController extends Controller
             'sum' => $sum
         ], 200);
     }
+    public function getDate(Request $request)
+    {
+        $currentUser = auth()->guard('api')->user();
+        $params = $request->all();
+        $params['clinic_id'] = $currentUser->clinic->id;
 
+        $payments = $this->service->getDate($params);
+
+        return response()->json([
+            'payments' => $payments
+        ], 200);
+    }
     public function commonData(Request $request) {
         $currentUser = auth()->guard('api')->user();
         $clinic_id = $currentUser->clinic->id;

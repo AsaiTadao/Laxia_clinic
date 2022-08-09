@@ -14,10 +14,31 @@ use Throwable;
  */
 class PaymentService
 {
+  public function getDate($search){
+    $query = Payment::with([
+        'reservation',
+        'reservation.patient',
+        'reservation.doctor',
+      ]);
+    if (isset($search['clinic_id'])) {
+        $clinicId = $search['clinic_id'];
+        $query->whereHas('reservation', function($subquery) use ($clinicId) {
+            $subquery->where('clinic_id', $clinicId);
+        });
+    }
+    if(isset($search['date'])){
+        $start_time=$search['date'];
+        $query->whereHas('reservation', function($subquery) use ($start_time) {
+          $subquery->whereMonth('visit_date', date(explode("-", $start_time)[1]))
+          ->whereYear('visit_date', date(explode("-", $start_time)[0]));
+        });
+      }
+    $query->orderby('created_at', 'desc');
+    return  $query->get();
+  }
   public function paginate($search)
   {
     $per_page = isset($search['per_page']) ? $search['per_page'] : 20;
-
     $query = Payment::with([
       'reservation',
       'reservation.patient',
