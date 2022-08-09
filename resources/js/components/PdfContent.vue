@@ -10,13 +10,13 @@
     <div class="payment">
       <div>
           <div>
-            <p class="payment-ttl">{{ past_monthday }}月請求金額</p>
+            <p class="payment-ttl">{{ past_month.split("-")[1].replace(/0/g, '') }}月請求金額</p>
               <div>
                 <strong>{{ current.total | currency }}</strong>
               </div>
           </div>
           <div>
-            <p class="payment-ttl">{{ past_monthday  }}月払い戻し金額</p>
+            <p class="payment-ttl">{{ past_month.split("-")[1].replace(/0/g, '')  }}月払い戻し金額</p>
             <div class="refund-calc">
               <strong>{{ current.funding | currency }}</strong>
             </div>
@@ -78,7 +78,6 @@ export default {
     ...mapGetters({
       hope_treat_types: 'constant/hope_treat_types',
     }),
-    past_monthday:this.props.past_month.split("-")[1]
   },
 }
 </script>
