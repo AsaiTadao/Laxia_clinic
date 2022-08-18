@@ -43,7 +43,7 @@
                   現在は仮登録の状態です。
                   <br><br>
                   本会員登録を完了するには下記URLにアクセスしてください。</p>
-                  <a href="poc://deeplink.flutter.dv?{{$user->email}}:{{$user->token}}">Click here</a>
+                  <a href="poc://deeplink.flutter.dv?{{$user['email']}}:{{$user['token']}}">Click here</a>
               </td>
             <td style="width:10%;"></td>
           </tr>

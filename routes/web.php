@@ -17,8 +17,9 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 // Route::get('/user/email/verify/{code}', 'User\Auth\RegisterController@verifyUser')->name('user.email.verify');
-Route::get('/password/newset/{code}', 'User\Auth\RegisterController@verifyUser')->name('password.newset');
+
 Route::get('/user/email/complete', 'User\Auth\RegisterController@complete')->name('user.register.complete_email');
+Route::get('/password/newset', 'SpaController')->where('path', '(.*)')->name('password.newset');
 
 Route::get('auth/{provider}', 'User\Auth\SocialController@redirect');
 Route::get('auth/{provider}/callback', 'User\Auth\SocialController@callback');

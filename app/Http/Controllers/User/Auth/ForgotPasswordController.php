@@ -60,7 +60,7 @@ class ForgotPasswordController extends Controller
         }
         $details = [
             'email'=>$request['email'],
-            'token' => Hash::make($token)
+            'token' => $data->token
         ];
         \Mail::to($request['email'])->send(new PatientVerifyEmail($details));
         // return new JsonResponse(
