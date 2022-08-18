@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\User\Auth;
 
-use App\Mail\UserVerifyEmail;
+use App\Mail\PatientVerifyEmail;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
@@ -59,9 +59,10 @@ class ForgotPasswordController extends Controller
             $data->save();
         }
         $details = [
-            'confirmation_code' => Hash::make($token)
+            'email'=>$request['email'],
+            'token' => Hash::make($token)
         ];
-        \Mail::to($request['email'])->send(new UserVerifyEmail($details));
+        \Mail::to($request['email'])->send(new PatientVerifyEmail($details));
         // return new JsonResponse(
         //     [
         //         'success' => true,

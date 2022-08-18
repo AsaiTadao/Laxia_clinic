@@ -59,6 +59,8 @@ class ForgotPasswordController extends Controller
             $data->type_id=$user->id;
             $data->token=Hash::make($token);
             $data->save();
+        }else{
+            return response()->json(['send_flag' => 'false'], 200);
         }
         $details = [
             'email'=>$request['email'],

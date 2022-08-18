@@ -49,6 +49,7 @@ class ResetPasswordController extends Controller
 
     protected function reset(Request $request)
     {
+        
         $user=User::where('email',$request['email'])->first();
         if($user){
             $query=Passwordnewset::query();
