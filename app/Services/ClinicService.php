@@ -60,7 +60,7 @@ class ClinicService
     }
 
     if (isset($search['city_id'])) {
-      $query->where('city_id', $search['city_id']);
+      $query->whereIn('city_id', explode(',',$search['city_id']));
     }
 
     // if (isset($search['orderby'])) {

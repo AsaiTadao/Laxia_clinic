@@ -6,6 +6,7 @@ use App\Models\Diary;
 use App\Models\TreatProgress;
 use App\Models\Master\Category;
 use App\Models\Media;
+use App\Models\Clinic;
 use DB;
 use Auth;
 use Throwable;
@@ -22,7 +23,8 @@ class DiaryService
     $query = Diary::query()
       ->with([
         'owner',
-        'categories'
+        'categories',
+        'clinic'
       ])->withCount('likers');
 
       if (isset($search['category_id']))
@@ -59,7 +61,7 @@ class DiaryService
     if (isset($search['city_id'])) {
       $city_id = $search['city_id'];
       $query->whereHas('clinic', function($subquery) use ($city_id) {
-        $subquery->whereIn('city_id', $city_id);
+        $subquery->whereIn('clinics.city_id', explode(',',$city_id));
       });
     }
 
