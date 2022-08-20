@@ -3,6 +3,7 @@ namespace App\Services;
 
 use Illuminate\Support\Arr;
 use App\Models\TreatCase;
+use App\Models\Clinic;
 use DB;
 use Auth;
 use Throwable;
@@ -17,7 +18,7 @@ class CaseService
   {
     $per_page = isset($search['per_page']) ? $search['per_page'] : 20;
     $query = TreatCase::query()
-      ->with(['categories', 'menus', 'images'])->withCount('likers');
+      ->with(['categories', 'menus', 'images','clinic'])->withCount('likers');
 
     if (isset($search['clinic_id'])) {
       $query->where('clinic_id', $search['clinic_id']);
@@ -26,7 +27,12 @@ class CaseService
     // if (isset($search['stuff_id']) && $search['stuff_id'] != '-1') {
     //   $query->where('stuff_id', $search['stuff_id']);
     // }
-
+    if (isset($search['city_id'])) {
+      $city_id = $search['city_id'];
+      $query->whereHas('clinic', function($subquery) use ($city_id) {
+        $subquery->whereIn('clinics.city_id', explode(',',$city_id));
+      });
+    }
     if (isset($search['category_id']) && $search['category_id'] != '-1') {
       // $query->where('category_id', $search['category_id']);
       $query->join('case_categories as cc', 'cases.id', '=', 'cc.case_id')

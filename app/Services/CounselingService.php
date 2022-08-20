@@ -5,6 +5,7 @@ use Illuminate\Support\Arr;
 use App\Models\Master\Category;
 use App\Models\CounselingReport;
 use App\Models\Media;
+use App\Models\Clinic;
 use DB;
 use Auth;
 use Throwable;
@@ -20,6 +21,7 @@ class CounselingService
     $per_page = isset($search['per_page']) ? $search['per_page'] : 20;
     $query = CounselingReport::query()
       ->with([
+        'clinic',
         'mediaSelf',
         'mediaLike',
         'mediaDislike',
@@ -48,7 +50,12 @@ class CounselingService
         });
       }
     }
-
+    if (isset($search['city_id'])) {
+      $city_id = $search['city_id'];
+      $query->whereHas('clinic', function($subquery) use ($city_id) {
+        $subquery->whereIn('clinics.city_id', explode(',',$city_id));
+      });
+    }
     if (isset($search['pref_id'])) {
       $pref_id = $search['pref_id'];
       $query->whereHas('clinic', function($subquery) use ($pref_id) {
