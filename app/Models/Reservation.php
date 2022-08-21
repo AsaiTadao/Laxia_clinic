@@ -43,11 +43,11 @@ class Reservation extends Model
   }
   public function getIsNowAttribute()
   {
-    return time() > strtotime($this->visit_date+' '+$this->start_time);
-  }
-  public function getStartTimeWithoutSecAttribute() {
     if($this->status!=15)
       return false;
+    return time()>strtotime(`$this->visit_date+' '+$this->start_time`);
+  }
+  public function getStartTimeWithoutSecAttribute() {
     return empty($this->start_time) ? '': substr($this->start_time, 0, 5);
   }
 
