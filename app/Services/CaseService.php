@@ -38,7 +38,18 @@ class CaseService
       $query->join('case_categories as cc', 'cases.id', '=', 'cc.case_id')
             ->where('cc.category_id', $search['category_id']);
     }
+    if (isset($search['price_min'])&&$search['price_min']!=0) {
+     $query->where('price', '>=', $search['price_min']);
+    }
 
+    if (isset($search['price_max'])&&$search['price_max']!=0) {
+     $query->where('price', '<=', $search['price_max']);
+    }
+     if (isset($search['year'])&&$search['year']!='0,0,0,0,0,0') {
+       $query->whereHas('owner',function($suvquery) use ($search) {
+        $suvquery->whereIn(\DB::raw('TIMESTAMPDIFF(year,patients.birthday,CURRENT_DATE)/10+1'),explode(',',$search['year']));
+       });
+     }
     if(isset($search['filter'])&&$search['filter']==0)
     {
         //     //$query->selectRaw("menus.*, IF(ISNULL(`diary_menu`.`id`), 0, COUNT(`menus`.`id`)) as diarycount")->leftJoin('diary_menu', 'menus.id', '=', 'diary_menu.menu_id')->groupBy('menus.id');

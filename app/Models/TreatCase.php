@@ -54,7 +54,10 @@ class TreatCase extends Model
     {
         return $this->belongsToMany(Category::class, 'case_categories', 'case_id', 'category_id');
     }
-
+    public function owner()
+    {
+        return $this->belongsTo(Patient::class, 'patient_id');
+    }
     public function menus()
     {
         return $this->belongsToMany(Menu::class, 'case_menus', 'case_id', 'menu_id');
