@@ -58,6 +58,7 @@ class Diary extends Model
     // 'ave_rate',
     'last_content',
     'is_favorite',
+    'is_mine',
   ];
 
   public function getPatientNicknameAttribute()
@@ -137,7 +138,10 @@ class Diary extends Model
   {
     return $this->likers()->count();
   }
-
+  public function getIsMineAttribute(){
+    $currentUser = auth()->guard('patient')->user();
+    return $this->patient_id==$currentUser->patient->id;
+  }
   public function getIsLikeAttribute()
   {
     $currentUser = auth()->guard('patient')->user();

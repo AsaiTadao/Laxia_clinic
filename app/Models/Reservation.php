@@ -34,14 +34,20 @@ class Reservation extends Model
   protected $appends = [
     'last_chat_time',
     'start_time_without_sec',
+    'is_now'
   ];
 
   public function getLastChatTimeAttribute()
   {
     return $this->hasOne(Mailbox::class)->first()->hasMany(Message::class)->orderBy('created_at', 'desc')->first();
   }
-
+  public function getIsNowAttribute()
+  {
+    return time() > strtotime($this->visit_date+' '+$this->start_time);
+  }
   public function getStartTimeWithoutSecAttribute() {
+    if($this->status!=15)
+      return false;
     return empty($this->start_time) ? '': substr($this->start_time, 0, 5);
   }
 

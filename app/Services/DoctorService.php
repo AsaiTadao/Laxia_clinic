@@ -5,6 +5,7 @@ use Illuminate\Support\Arr;
 use App\Models\Doctor;
 use App\Models\Attachment;
 use App\Models\Master\Category;
+use App\Models\Clinic;
 
 use DB;
 use Auth;
@@ -21,7 +22,10 @@ class DoctorService
     $diary_acount = \DB::table('diaries')
     ->select('doctor_id', DB::raw('avg(ave_rate) as ave_rate, count(id) as diaries_count'))
     ->groupBy('doctor_id');
-    $query = Doctor::query()->leftJoinSub($diary_acount, 'diary_avg', function ($join) {
+    $query = Doctor::query()
+      ->with([
+        'clinic'
+      ])->leftJoinSub($diary_acount, 'diary_avg', function ($join) {
         $join->on('doctors.id', '=', 'diary_avg.doctor_id');
       });
     if (isset($search['category_id']))
@@ -41,7 +45,12 @@ class DoctorService
               ->orWhere('hira_name', 'like', "%{$search['q']}%");
       });
     }
-
+    if (isset($search['city_id'])) {
+      $city_id = $search['city_id'];
+      $query->whereHas('clinic', function($subquery) use ($city_id) {
+        $subquery->whereIn('clinics.city_id', explode(',',$city_id));
+      });
+    }
     if (isset($search['favorite']) && $search['favorite'] == 1)
     {
       $currentUser = auth()->guard('doctor')->user();

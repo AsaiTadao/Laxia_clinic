@@ -18,7 +18,8 @@ class Reservation extends JsonResource
             'clinic_name' => $this->clinic->name,
             'status' => $this->status,
             'visit_date' => $this->visit_date,
-            'visit_time' => $this->visit_time,
+            'visit_time' => $this->start_time,
+            'is_now' => $this->is_now,
             'mailbox' => $this->mailbox->id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at
