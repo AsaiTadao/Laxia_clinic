@@ -104,7 +104,7 @@ class SearchController extends Controller
         $middoctors = $this->doctorService->paginate($params);
         $doctors=[];
         foreach($middoctors as $doctor){
-            array_push($doctors,['id'=>$doctor->id,'name'=>$doctor->name]);
+            array_push($doctors,['id'=>$doctor->id,'name'=>$doctor->kata_name]);
         }
         // $middiaries = $this->diaryService->paginate($params);
         // $diaries=[];
