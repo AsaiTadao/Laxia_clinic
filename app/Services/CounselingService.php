@@ -96,6 +96,7 @@ class CounselingService
     else if(isset($search['filter'])&&$search['filter']==1){
         $query->orderby('updated_at', 'DESC');
     }
+    $query->where('public', 1);
     $query->orderby('created_at', 'DESC');
     return $query->paginate($per_page);
   }

@@ -64,7 +64,6 @@ class ProgressController extends Controller
             'progresses' => 'required|array',
             'progresses.from_treat_day' => 'required|integer',
             'progresses.content' => 'required|string',
-            'medias' => 'nullable|array',
             'status' => 'required|array'
         ]);
 
@@ -112,7 +111,7 @@ class ProgressController extends Controller
             'data' => $this->commentService->paginate($request->all(), $progress),
         ]);
     }
-    
+
     public function storeComment(Request $request, $progress_id)
     {
         $progress = TreatProgress::find($progress_id);

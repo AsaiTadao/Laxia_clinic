@@ -17,19 +17,18 @@ class ProgressService
   public function update($attributes, $where)
   {
     $progress = TreatProgress::where($where)->firstOrFail();
-
     $progressAttrs = Arr::get($attributes, 'progresses');
     $progress->update($progressAttrs);
-
-    $progress->medias()->delete();
-    $mediaAttrs = Arr::get($attributes, 'medias');
-    foreach ($mediaAttrs as $id)
-    {
-      $media = Media::find($id);
-      if (!$media) continue;
-      $progress->medias()->save($media);
+    if(isset($attributes['medias]'])){
+        $progress->medias()->delete();
+        $mediaAttrs = Arr::get($attributes, 'medias');
+        foreach ($mediaAttrs as $id)
+        {
+        $media = Media::find($id);
+        if (!$media) continue;
+        $progress->medias()->save($media);
+        }
     }
-
     $progress->statuses()->sync([]);
     $statusAttrs = Arr::get($attributes, 'status');
     foreach ($statusAttrs as $key => $value)

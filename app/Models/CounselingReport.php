@@ -29,6 +29,7 @@ class CounselingReport extends Model
     'before_counseling',
     'after_ccounseling',
     'rate',
+    'public'
   ];
 
   protected $appends = [

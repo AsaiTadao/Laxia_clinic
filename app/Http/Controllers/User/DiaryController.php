@@ -142,7 +142,7 @@ class DiaryController extends Controller
             \Log::error($e->getMessage());
 
             return response()->json([
-                'message' => 'エラーが発生しました。'
+                'message' =>$e->getMessage()
             ], 500);
         }
 

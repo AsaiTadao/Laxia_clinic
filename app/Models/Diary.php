@@ -40,6 +40,7 @@ class Diary extends Model
     'cost_anesthetic',
     'cost_drug',
     'cost_other',
+    'public'
   ];
 
   protected $appends = [

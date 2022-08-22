@@ -119,6 +119,7 @@ class DiaryService
     }else if(isset($search['filter'])&&$search['filter']==2){
         $query->orderby('updated_at', 'DESC');
     }
+    $query->where('public', 1);
     return $query->paginate($per_page);
   }
 
@@ -137,7 +138,6 @@ class DiaryService
         + $diaryAttrs['rate_08']
         + $diaryAttrs['rate_09']
       ) / 9, 1);
-
     $menuAttrs = Arr::get($attributes, 'menus');
 
     $menuPriceSum = 0;
@@ -149,7 +149,6 @@ class DiaryService
 
     $categoryAttrs = Arr::get($attributes, 'categories');
     $diary->categories()->sync($categoryAttrs);
-
 
     $menuPivot = [];
     foreach ($menuAttrs as $item) {
@@ -165,7 +164,7 @@ class DiaryService
         $media = Media::find($id);
         $media->type=0;
         if (!$media) continue;
-        $diary->medias()->save($media);
+            $diary->medias()->save($media);
         }
     }
     if(isset($attributes['after_medias'])){
