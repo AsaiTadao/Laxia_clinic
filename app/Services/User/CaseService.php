@@ -26,7 +26,9 @@ class CaseService
     if (isset($search['clinic_id'])) {
       $query->where('clinic_id', $search['clinic_id']);
     }
-
+    if (isset($search['year'])&&$search['year']!='0,0,0,0,0,0') {
+        $query->where('patient_age', $search['year']);
+      }
     if (isset($search['doctor_id']) && $search['doctor_id'] != '-1') {
       $query->where('doctor_id', $search['doctor_id']);
     }
@@ -37,14 +39,19 @@ class CaseService
       }
       if (isset($search['price_min'])&&$search['price_min']!=0) {
         $query->whereHas('menus', function ($subquery) use ($search) {
-          $subquery->where('price', '>=', $search['price_min']);
+          $subquery->where('menus.price', '>=', $search['price_min']);
         });
       }
       if (isset($search['price_max'])&&$search['price_max']!=0) {
-          $query->whereHas('menus', function ($subquery) use ($search) {
-
-               $subquery->where('price', '<=', $search['price_max']);
-          });
+        $query->whereHas('menus', function ($subquery) use ($search) {
+            $subquery->where('menus.price', '<=', $search['price_max']);
+        });
+      }
+      if (isset($search['city_id'])) {
+        $city_id = $search['city_id'];
+        $query->whereHas('clinic', function($subquery) use ($city_id) {
+          $subquery->whereIn('clinics.city_id', explode(',',$city_id));
+        });
       }
       if(isset($search['filter'])&&$search['filter']==0)
       {

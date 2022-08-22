@@ -72,7 +72,6 @@ class TreatCase extends Model
     {
         return $this->morphMany(Attachment::class, 'attachable');
     }
-
     public function viewers()
     {
         return $this->morphToMany(Patient::class, 'viewable', 'viewables','viewable_id', 'patient_id');
