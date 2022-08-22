@@ -38,7 +38,6 @@ class CaseService
       $query->join('case_categories as cc', 'cases.id', '=', 'cc.case_id')
             ->where('cc.category_id', $search['category_id']);
     }
-
     if(isset($search['filter'])&&$search['filter']==0)
     {
         //     //$query->selectRaw("menus.*, IF(ISNULL(`diary_menu`.`id`), 0, COUNT(`menus`.`id`)) as diarycount")->leftJoin('diary_menu', 'menus.id', '=', 'diary_menu.menu_id')->groupBy('menus.id');
