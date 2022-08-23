@@ -141,7 +141,7 @@ class Diary extends Model
   }
   public function getIsMineAttribute(){
     $currentUser = auth()->guard('patient')->user();
-    return $this->patient_id==$currentUser->patient->id;
+    return $this->patient_id==$currentUser->patient ? $currentUser->patient->id : null;
   }
   public function getIsLikeAttribute()
   {
