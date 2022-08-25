@@ -239,7 +239,7 @@ class Diary extends Model
     if ($this->medias()->count() == 0) {
       return null;
     }
-    $first_media = $this->medias()->first();
+    $first_media = $this->medias()->where('type',0)->first();
     return $first_media->thumb_path;
   }
 
@@ -254,7 +254,7 @@ class Diary extends Model
     if ($last_progress->medias()->count() == 0) {
       return null;
     }
-    $media = $last_progress->medias()->first();
+    $media = $last_progress->medias()->where('type',1)->first();
     return $media->thumb_path;
   }
 
