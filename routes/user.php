@@ -26,6 +26,7 @@ Route::get('diaries', 'DiaryController@search');
 Route::get('counselings', 'CounselingController@search');
 Route::get('questions', 'QuestionController@search');
 Route::get('cases', 'CaseController@index');
+Route::post('register/detail', 'ProfileController@registerDetail');
 
 // 検索
 
@@ -37,7 +38,6 @@ Route::group(['middleware' => 'guest:api'], function () {
 
   Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
 
-  Route::post('register/detail', 'ProfileController@registerDetail');
 
   // Route::post('email/verify/{user}', 'Auth\VerificationController@verify')->name('verification.verify');
   // Route::post('email/resend', 'Auth\VerificationController@resend');
