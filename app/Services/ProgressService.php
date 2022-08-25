@@ -19,7 +19,7 @@ class ProgressService
     $progress = TreatProgress::where($where)->firstOrFail();
     $progressAttrs = Arr::get($attributes, 'progresses');
     $progress->update($progressAttrs);
-    if(isset($attributes['medias]'])){
+    if(isset($attributes['medias'])){
         $progress->medias()->delete();
         $mediaAttrs = Arr::get($attributes, 'medias');
         foreach ($mediaAttrs as $id)
