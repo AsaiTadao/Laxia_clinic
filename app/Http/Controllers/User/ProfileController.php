@@ -39,7 +39,13 @@ class ProfileController extends Controller
         // return new MeResource(auth()->guard('patient')->user()->patient);
     }
     public function registerDetail(Request $request) {
-        $patient = Patient::where('user_id',$request['id'])->first();
+        if(isset($request['id'])){
+            $patient = Patient::where('user_id',$request['id'])->first();
+        }
+        else{
+            $currentUser = auth()->guard('patient')->user();
+            $patient = $currentUser->patient;
+        }
         $patient->update(['unique_id'=>''], ['id' => $patient->id]);
         // return $patient;
         $validator = Validator::make($request->all(), [
