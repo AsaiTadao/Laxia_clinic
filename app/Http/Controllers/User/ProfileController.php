@@ -40,6 +40,7 @@ class ProfileController extends Controller
     }
     public function registerDetail(Request $request) {
         $patient = Patient::where('user_id',$request['id'])->first();
+        $patient->update(['unique_id'=>''], ['id' => $patient->id]);
         // return $patient;
         $validator = Validator::make($request->all(), [
             'patients' => ['required', 'array'],
