@@ -20,7 +20,9 @@ class ProgressService
     $progressAttrs = Arr::get($attributes, 'progresses');
     $progress->update($progressAttrs);
     if(isset($attributes['medias'])){
-        $progress->medias()->delete();
+        $progress->medias()->update([
+            'mediable_type'=>""
+          ]);
         $mediaAttrs = Arr::get($attributes, 'medias');
         foreach ($mediaAttrs as $id)
         {
