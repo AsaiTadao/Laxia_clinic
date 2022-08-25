@@ -73,7 +73,7 @@ class ContentService
         $join->on('treat_progresses.id', '=', 'progress_medias.mediable_id');
       });
 
-    $diaries_query = \DB::table('diaries')
+    $diaries_query = \DB::table('diaries')->where('public',1)
       ->join('patients', 'patients.id', '=', 'diaries.patient_id')
       ->join('clinics', 'clinics.id', '=', 'diaries.clinic_id')
       ->leftJoinSub($diary_comments, 'comments_count', function ($join) {
@@ -143,7 +143,7 @@ class ContentService
       });
 
 
-    $cr_query = \DB::table('counseling_reports')
+    $cr_query = \DB::table('counseling_reports')->where('public',1)
       ->join('patients', 'patients.id', '=', 'counseling_reports.patient_id')
       ->join('clinics', 'clinics.id', '=', 'counseling_reports.clinic_id')
       ->leftJoinSub($cr_comments, 'comments_count', function ($join) {
