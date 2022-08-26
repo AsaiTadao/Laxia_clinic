@@ -47,6 +47,7 @@ class Doctor extends Model
     'avg_rate',
     'categories',
     'job_name',
+    'is_favorite',
   ];
 
   protected $hidden = [
