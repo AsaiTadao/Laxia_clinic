@@ -47,6 +47,7 @@ class Menu extends Model
   protected $appends = [
     'likes_count',
     'is_favorite',
+    'favorites_count',
     'diarycount',
     'periodsum',
     'avg_rate',
@@ -64,9 +65,13 @@ class Menu extends Model
   {
     return $this->likers()->count();
   }
+  public function getfavoritesCountAttribute()
+  {
+    return $this->favoriters()->count();
+  }
   public function likers()
   {
-      return $this->morphToMany(Patient::class, 'favoriable');
+      return $this->morphToMany(Patient::class, 'likeable');
   }
   public function process()
   {
