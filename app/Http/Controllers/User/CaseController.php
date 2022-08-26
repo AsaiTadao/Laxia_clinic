@@ -88,5 +88,14 @@ class CaseController extends Controller
             'photo' => $path
         ], 200);
     }
+    public function toggleFavorite(TreatCase $case)
+    {
+        $patient = auth()->guard('patient')->user()->patient;
+        $result = $case->favoriters()->toggle($patient->id);
+        return response()->json([
+            'status' => 1,
+            'data' => $result
+        ], 200);
+    }
     
 }

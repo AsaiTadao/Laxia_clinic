@@ -245,16 +245,19 @@ class Diary extends Model
 
   public function getAfterImageAttribute()
   {
-    if ($this->progresses()->count() == 0) {
+    // if ($this->progresses()->count() == 0) {
+    //   return null;
+    // }
+    // $last_progress = $this->progresses()
+    //   ->orderBy('updated_at', 'DESC')
+    //   ->first();
+    // if ($last_progress->medias()->count() == 0) {
+    //   return null;
+    // }
+    $media = $this->medias()->where('type',1)->first();
+    if (!isset($media)) {
       return null;
     }
-    $last_progress = $this->progresses()
-      ->orderBy('updated_at', 'DESC')
-      ->first();
-    if ($last_progress->medias()->count() == 0) {
-      return null;
-    }
-    $media = $last_progress->medias()->where('type',1)->first();
     return $media->thumb_path;
   }
 

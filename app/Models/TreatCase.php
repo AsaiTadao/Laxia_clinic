@@ -58,6 +58,9 @@ class TreatCase extends Model
     {
         return $this->belongsTo(Patient::class, 'patient_id');
     }
+    public function favoriters(){
+        return $this->morphToMany(Patient::class, 'favoriable', 'favorites');
+    }
     public function menus()
     {
         return $this->belongsToMany(Menu::class, 'case_menus', 'case_id', 'menu_id');

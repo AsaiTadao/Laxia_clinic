@@ -131,7 +131,10 @@ class Patient extends Model
   {
     return $this->morphedByMany(Diary::class, 'favoriable', 'favorites');
   }
-
+  public function favoriteCases()
+  {
+    return $this->morphedByMany(TreatCase::class, 'favoriable', 'favorites');
+  }
   public function favoriteClinics()
   {
     return $this->morphedByMany(Clinic::class, 'favoriable', 'favorites');

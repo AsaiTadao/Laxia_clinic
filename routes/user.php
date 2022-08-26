@@ -109,6 +109,7 @@ Route::group(['middleware' => ['auth.patient']], function() {
 
   // 症例
   Route::get('cases/{case}', 'CaseController@get');
+  Route::post('cases/{case}/toggleFavorite', 'CaseController@toggleFavorite');
 
   //スタッフ
   Route::get('stuffs/{stuff}', 'StuffController@get');
