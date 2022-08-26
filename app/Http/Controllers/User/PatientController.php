@@ -32,10 +32,10 @@ class PatientController extends Controller
     {
         $currentUser = auth()->guard('patient')->user();
         $patient = $currentUser->patient;
-        $patient = $this->service->get($id);
         $isfollow = $this->service->IsFollow($id,$patient->id);
+        $patient = $this->service->get($id);
         $patient['isfollow']=$isfollow;
-        
+
         return response()->json([
             'status' => 1,
             'data' => [
