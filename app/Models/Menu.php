@@ -66,7 +66,7 @@ class Menu extends Model
   }
   public function likers()
   {
-      return $this->morphToMany(Patient::class, 'likeable');
+      return $this->morphToMany(Patient::class, 'favoriable');
   }
   public function process()
   {
