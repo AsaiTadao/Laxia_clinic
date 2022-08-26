@@ -100,7 +100,7 @@ class ClinicService
     return Clinic::with([
         'images',
         // 'menus_limit2',
-        // 'stuffs_limit4',
+        'cases',
         'doctors',
         'doctors.categories',
         'menus.categories',
