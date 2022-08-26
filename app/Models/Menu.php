@@ -45,6 +45,7 @@ class Menu extends Model
   ];
 
   protected $appends = [
+    'likes_count',
     'is_favorite',
     'diarycount',
     'periodsum',
@@ -58,6 +59,14 @@ class Menu extends Model
   }
   public function getPeriodsumAttribute(){
     return $this->process()->sum('period');
+  }
+  public function getLikesCountAttribute()
+  {
+    return $this->likers()->count();
+  }
+  public function likers()
+  {
+      return $this->morphToMany(Patient::class, 'likeable');
   }
   public function process()
   {
