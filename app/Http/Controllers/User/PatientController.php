@@ -75,6 +75,31 @@ class PatientController extends Controller
             ]
         ]);
     }
+    public function getFollowsId(Patient $patient,Request $request)
+    {
+        $params = $request->all();
+        $params['patient_id'] = $patient->id;
+        $follows = $this->service->getFollows($params);
+        return response()->json([
+            'status' => 1,
+            'data' => [
+                'follows' => $follows
+            ]
+        ]);
+    }
+
+    public function getFollowersId(Patient $patient,Request $request)
+    {
+        $params = $request->all();
+        $params['follow_id'] = $patient->id;
+        $followers = $this->service->getFollowers($params);
+        return response()->json([
+            'status' => 1,
+            'data' => [
+                'followers' => $followers
+            ]
+        ]);
+    }
 
     public function toggleFollow(Request $request, Patient $patient)
     {

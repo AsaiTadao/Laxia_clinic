@@ -97,7 +97,8 @@ Route::group(['middleware' => ['auth.patient']], function() {
   // フォロー・フォロワー
   Route::get('follows', 'PatientController@getFollows');
   Route::get('followers', 'PatientController@getFollowers');
-
+  Route::get('{patient}/follows', 'PatientController@getFollowsId');
+  Route::get('{patient}/followers', 'PatientController@getFollowersId');
   // ユーザーアカウント
   Route::get('patients', 'PatientController@index');
   Route::get('patients/{patient}', 'PatientController@get');
