@@ -22,6 +22,7 @@ class DiaryService
     $per_page = isset($search['per_page']) ? $search['per_page'] : 20;
     $query = Diary::query()
       ->with([
+        'doctor',
         'owner',
         'categories',
         'clinic'
