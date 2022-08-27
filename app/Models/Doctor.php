@@ -248,6 +248,10 @@ class Doctor extends Model
   {
     return $this->categories()->get();
   }
+  public function getTagNameAttribute()
+  {
+    return $this->categories()->first()->name;
+  }
   public function categories()
   {
     return $this->belongsToMany(Category::class, 'doctor_categories', 'doctor_id', 'category_id');
