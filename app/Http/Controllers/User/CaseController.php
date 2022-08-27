@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\User\CaseService;
 use App\Http\Requests\CaseRequest;
+use App\Services\ViewService;
 use App\Models\TreatCase;
 
 class CaseController extends Controller
@@ -16,9 +17,11 @@ class CaseController extends Controller
     protected $service;
 
     public function __construct(
-        CaseService $service
+        CaseService $service,
+        ViewService $viewService
     ) {
         $this->service = $service;
+        $this->viewService = $viewService;
     }
 
     public function index(Request $request)

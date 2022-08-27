@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Services\CounselingService;
 use App\Services\CommentService;
 use App\Models\CounselingReport;
+use App\Services\ViewService;
 
 class CounselingController extends Controller
 {
@@ -23,10 +24,12 @@ class CounselingController extends Controller
 
     public function __construct(
         CounselingService $service,
-        CommentService $commentService
+        CommentService $commentService,
+        ViewService $viewService
     ) {
         $this->service = $service;
         $this->commentService = $commentService;
+        $this->viewService = $viewService;
     }
 
     public function search(Request $request)
