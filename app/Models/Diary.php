@@ -240,7 +240,10 @@ class Diary extends Model
       return null;
     }
     $first_media = $this->medias()->where('type',0)->first();
-    return $first_media->thumb_path;
+    if ($first_media) {
+      return $first_media->thumb_path;
+    }
+    return null;
   }
 
   public function getAfterImageAttribute()
