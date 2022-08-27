@@ -39,7 +39,18 @@ class DiaryService
             $suvquery->whereIn('mtb_part_categories.id',explode(',',$search['category_id']));
         });
       }
-
+    if(isset($search['q']) && $search['q'] != '') {
+        $query->whereHas('doctor', function($subquery) use ($search) {
+            $subquery->where(function($query) use ($search) {
+                    $query->where('kata_name', 'like', "%{$search['q']}%")
+                    ->orWhere('hira_name', 'like', "%{$search['q']}%");
+            });
+        })->orwhereHas('clinic', function($subquery) use ($search) {
+            $subquery->where(function($query) use ($search) {
+                    $query->where('name', 'like', "%{$search['q']}%");
+            });
+        });
+    }
     if (isset($search['favorite']) && $search['favorite'] == 1)
     {
       $currentUser = auth()->guard('patient')->user();

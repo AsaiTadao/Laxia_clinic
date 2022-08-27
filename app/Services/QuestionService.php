@@ -29,7 +29,18 @@ class QuestionService
       ])->withCount('likers')->withCount('answer')->leftJoinSub($answer_count, 'answer_count', function ($join) {
         $join->on('questions.id', '=', 'answer_count.question_id');
       });
-
+      if(isset($search['q']) && $search['q'] != '') {
+        $query->whereHas('doctor', function($subquery) use ($search) {
+            $subquery->where(function($query) use ($search) {
+                    $query->where('kata_name', 'like', "%{$search['q']}%")
+                    ->orWhere('hira_name', 'like', "%{$search['q']}%");
+            });
+        })->orwhereHas('clinic', function($subquery) use ($search) {
+            $subquery->where(function($query) use ($search) {
+                    $query->where('name', 'like', "%{$search['q']}%");
+            });
+        });
+    }
     if (isset($search['category_id']))
     {
       $ids = $search['category_id'];
