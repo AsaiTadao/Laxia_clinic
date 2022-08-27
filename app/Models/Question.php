@@ -34,7 +34,8 @@ class Question extends Model
     // 'favoriters_count',
     'is_favorite',
     'answers',
-    'is_answer'
+    'is_answer',
+    'is_mine',
   ];
 
   public function viewers()
@@ -46,7 +47,12 @@ class Question extends Model
   {
     return $this->viewers()->count();
   }
-
+  public function getIsMineAttribute(){
+    $currentUser = auth()->guard('patient')->user();
+    if (!$currentUser||$currentUser->role=='clinic') return false;
+    return $this->patient_id==$currentUser->patient->id;
+    // return $this->patient_id==$currentUser->patient->id;
+  }
   public function comments()
   {
     return $this->morphMany(Comment::class, 'commentable');
