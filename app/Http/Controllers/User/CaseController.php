@@ -31,6 +31,11 @@ class CaseController extends Controller
 
     public function get(TreatCase $case)
     {
+        $currentUser = auth()->guard('patient')->user();
+        $patient = $currentUser->patient;
+        if ($patient->id != $case->patient_id) {
+            $this->viewService->view($patient, $case);
+        }
         return response()->json([
             'case' => $case->load([
                 'clinic', 'categories', 'menus', 'doctor'
@@ -97,5 +102,5 @@ class CaseController extends Controller
             'data' => $result
         ], 200);
     }
-    
+
 }

@@ -47,7 +47,7 @@ class CounselingController extends Controller
         $currentUser = auth()->guard('patient')->user();
         $patient = $currentUser->patient;
         if ($patient->id != $counseling->patient_id) {
-            // $this->viewService->view($patient, $counseling);
+            $this->viewService->view($patient, $counseling);
         }
 
         return response()->json([
