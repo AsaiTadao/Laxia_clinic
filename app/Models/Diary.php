@@ -60,8 +60,15 @@ class Diary extends Model
     'last_content',
     'is_favorite',
     'is_mine',
+    'tag_name'
   ];
-
+  public function getTagNameAttribute()
+  {
+    $tag=$this->categories()->first();
+    if($tag)
+      return $tag->name;
+    return '';
+  }
   public function getPatientNicknameAttribute()
   {
     if ($this->owner()->count()) {
