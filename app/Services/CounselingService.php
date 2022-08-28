@@ -37,6 +37,15 @@ class CounselingService
         $subquery->whereIn('counseling_categories.category_id', $ids);
       });
     }
+    // if(isset($search['q']) && $search['q'] != '') {
+    //   $query->where(function ($query3){
+    //     $query3->whereHas('doctor', function($subquery) use ($search) {
+    //           $subquery->where(function($query2) use ($search) {
+    //                   $query2->where('kata_name', 'like', "%{$search['q']}%")
+    //                   ->orWhere('hira_name', 'like', "%{$search['q']}%");
+    //           });
+    //       });
+    //   });
     if(isset($search['q']) && $search['q'] != '') {
         $query->whereHas('doctor', function($subquery) use ($search) {
             $subquery->where(function($query) use ($search) {
