@@ -55,6 +55,7 @@ class QuestionController extends Controller
 
     public function get(Question $question)
     {
+        $currentUser = auth()->guard('patient')->user();
         $patient = $currentUser->patient;
         if ($patient->id != $question->patient_id) {
             $this->viewService->view($patient, $question);
