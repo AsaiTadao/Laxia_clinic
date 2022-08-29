@@ -105,7 +105,6 @@ class ContentService
 
     $diaries_query->select(
         'diaries.id',
-        'diaries.public',
         'patients.id as patient_id',
         'patients.nickname as nickname',
         'patients.photo as photo',
@@ -169,7 +168,6 @@ class ContentService
     }
     $cr_query->select(
         'counseling_reports.id',
-        'counseling_reports.public',
         'patients.id as patient_id',
         'patients.nickname as nickname',
         'patients.photo as photo',
@@ -229,7 +227,6 @@ class ContentService
     }
     $q_query->select(
         'questions.id',
-        'questions.public',
         'patients.id as patient_id',
         'patients.nickname as nickname',
         'patients.photo as photo',
