@@ -86,6 +86,7 @@ Route::group(['middleware' => ['auth.patient']], function() {
   // 質問
   Route::post('questions', 'QuestionController@store');
   Route::get('questions/{question}', 'QuestionController@get');
+  Route::put('questions/{question}', 'QuestionController@update');
   Route::post('questions/{question}/toggleLike', 'QuestionController@toggleLike');
   Route::post('questions/{question}/toggleFavorite', 'QuestionController@toggleFavorite');
   Route::get('questions/{question}/comments', 'QuestionController@indexComments');

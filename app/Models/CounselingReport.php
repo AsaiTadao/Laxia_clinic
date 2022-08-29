@@ -43,8 +43,14 @@ class CounselingReport extends Model
     'doctor_name',
     // 'favoriters_count',
     'is_favorite',
+    'is_mine',
   ];
-
+  public function getIsMineAttribute(){
+    $currentUser = auth()->guard('patient')->user();
+    if (!$currentUser||$currentUser->role=='clinic') return false;
+    return $this->patient_id==$currentUser->patient->id;
+    // return $this->patient_id==$currentUser->patient->id;
+  }
   public function getClinicNameAttribute()
   {
     if ($this->clinic()->count()) {

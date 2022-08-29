@@ -130,4 +130,27 @@ class QuestionService
     }
     return $question;
   }
+  public function update($attributes, $where)
+  {
+  
+    $question =Question::where($where)->firstOrFail();
+    $questionAttrs = Arr::get($attributes, 'questions');
+    $cateArr = Arr::get($attributes, 'categories');
+    $question->update($questionAttrs);
+    
+    $question->categories()->sync($cateArr);
+    $question->medias()->update([
+      'mediable_type'=>""
+    ]);
+    if(isset($attributes['medias'])){
+        $mediaArr = Arr::get($attributes, 'medias');
+        foreach ($mediaArr as $id)
+        {
+        $media = Media::find($id);
+        if (!$media) continue;
+        $question->medias()->save($media);
+        }
+    }
+    return $question;
+  }
 }
