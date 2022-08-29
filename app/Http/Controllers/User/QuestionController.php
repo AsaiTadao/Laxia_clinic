@@ -57,9 +57,9 @@ class QuestionController extends Controller
     {
         $currentUser = auth()->guard('patient')->user();
         $patient = $currentUser->patient;
-        if ($patient->id != $question->patient_id) {
+        // if ($patient->id != $question->patient_id) {
             $this->viewService->view($patient, $question);
-        }
+        // }
 
         return response()->json([
             'status' => 1,

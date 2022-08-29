@@ -80,9 +80,9 @@ class DiaryController extends Controller
 
         $currentUser = auth()->guard('patient')->user();
         $patient = $currentUser->patient;
-        if ($patient->id != $diary->patient_id) {
+        // if ($patient->id != $diary->patient_id) {
             $this->viewService->view($patient, $diary);
-        }
+        // }
         return response()->json([
             'status' => 1,
             'data' => [
