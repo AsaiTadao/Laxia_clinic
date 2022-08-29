@@ -29,17 +29,8 @@ class QuestionService
       ])->withCount('likers')->withCount('answer')->leftJoinSub($answer_count, 'answer_count', function ($join) {
         $join->on('questions.id', '=', 'answer_count.question_id');
       });
-      if(isset($search['q']) && $search['q'] != '') {
-        $query->whereHas('doctor', function($subquery) use ($search) {
-            $subquery->where(function($query) use ($search) {
-                    $query->where('kata_name', 'like', "%{$search['q']}%")
-                    ->orWhere('hira_name', 'like', "%{$search['q']}%");
-            });
-        })->orwhereHas('clinic', function($subquery) use ($search) {
-            $subquery->where(function($query) use ($search) {
-                    $query->where('name', 'like', "%{$search['q']}%");
-            });
-        });
+    if(isset($search['q']) && $search['q'] != '') {
+        $query->where('title', 'like', "%{$search['q']}%");
     }
     if (isset($search['category_id']))
     {
@@ -128,6 +119,29 @@ class QuestionService
     $question = Question::create($data);
 
     $question->categories()->sync($cateArr);
+    if(isset($attributes['medias'])){
+        $mediaArr = Arr::get($attributes, 'medias');
+        foreach ($mediaArr as $id)
+        {
+        $media = Media::find($id);
+        if (!$media) continue;
+        $question->medias()->save($media);
+        }
+    }
+    return $question;
+  }
+  public function update($attributes, $where)
+  {
+  
+    $question =Question::where($where)->firstOrFail();
+    $questionAttrs = Arr::get($attributes, 'questions');
+    $cateArr = Arr::get($attributes, 'categories');
+    $question->update($questionAttrs);
+    
+    $question->categories()->sync($cateArr);
+    $question->medias()->update([
+      'mediable_type'=>""
+    ]);
     if(isset($attributes['medias'])){
         $mediaArr = Arr::get($attributes, 'medias');
         foreach ($mediaArr as $id)

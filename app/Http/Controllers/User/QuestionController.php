@@ -115,32 +115,50 @@ class QuestionController extends Controller
         ], 200);
     }
 
-    public function update(MenuRequest $request, $id)
-    {
-        $params = $request->menus;
-        $menu = $this->service->get($id);
-        $currentUser = auth()->guard('api')->user();
-        if ($currentUser->id != $menu->clinic_id) {
-            return response()->json([
-                'message' => 'Permission Denied'
-            ], 403);
-        }
+    public function update(Request $request, $id)
+    {  
+        $question = Question::find($id);
 
+        if(empty($question))
+        return response()->json([
+            'status' => 0,
+            'message' => 'エラーが発生しました。',
+            'errors' => ''
+        ]);
+        $validator = Validator::make($request->all(), [
+            'questions' => 'required|array',
+            'questions.title' => 'required|string|max:255',
+            'questions.content' => 'required|string',
+            'categories' => 'required|array',
+            'medias' => 'nullable|array'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 0,
+                'message' => 'エラーが発生しました。',
+                'errors' => $validator->getMessageBag()->toArray()
+            ]);
+        }
+        
         \DB::beginTransaction();
         try {
-            $menu = $this->service->update($request->all(), ['id' => $id]);
-
+            
+            $question = $this->service->update($request->all(), ['id' => $question->id]);
             \DB::commit();
         } catch (\Throwable $e) {
             \DB::rollBack();
             \Log::error($e->getMessage());
 
-            return  response()->json([
-                'message' => 'メニューを変更できません。'
+            return response()->json([
+                'message' => '質問を登録できません。'
             ], 500);
         }
         return response()->json([
-            'menu' => $menu
+            'status' => 1,
+            'data' => [
+                'question' => $question
+            ]
         ], 200);
     }
 

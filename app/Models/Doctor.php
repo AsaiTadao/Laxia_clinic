@@ -48,6 +48,7 @@ class Doctor extends Model
     'categories',
     'job_name',
     'is_favorite',
+    'tag_name'
   ];
 
   protected $hidden = [
@@ -250,7 +251,10 @@ class Doctor extends Model
   }
   public function getTagNameAttribute()
   {
-    return $this->categories()->first()->name;
+    $tag=$this->categories()->first();
+    if($tag)
+      return $tag->name;
+    return '';
   }
   public function categories()
   {

@@ -37,9 +37,16 @@ class TreatCase extends Model
       'likes_count',
       'is_like',
       'beforeimage',
-      'afterimage'
+      'afterimage',
+      'tag_name'
     ];
-
+    public function getTagNameAttribute()
+    {
+      $tag=$this->categories()->first();
+      if($tag)
+        return $tag->name;
+      return '';
+    }
     public function clinic()
     {
         return $this->belongsTo(Clinic::class);
