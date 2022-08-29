@@ -21,10 +21,12 @@ class TopController extends Controller
 
     public function search(Request $request)
     {
+        $patient_id = auth()->guard('patient')->user()->patient->id;
         $params = $request->all();
         $contents = $this->service->search($params);
         return response()->json([
-            'contents' => $contents
+            'contents' => $contents,
+            'id'=>$patient_id
         ], 200);
     }
 

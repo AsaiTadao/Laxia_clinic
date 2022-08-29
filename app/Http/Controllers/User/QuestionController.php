@@ -55,7 +55,6 @@ class QuestionController extends Controller
 
     public function get(Question $question)
     {
-        $currentUser = auth()->guard('patient')->user();
         $patient = $currentUser->patient;
         if ($patient->id != $question->patient_id) {
             $this->viewService->view($patient, $question);
@@ -116,7 +115,7 @@ class QuestionController extends Controller
     }
 
     public function update(Request $request, $id)
-    {  
+    {
         $question = Question::find($id);
 
         if(empty($question))
@@ -140,10 +139,10 @@ class QuestionController extends Controller
                 'errors' => $validator->getMessageBag()->toArray()
             ]);
         }
-        
+
         \DB::beginTransaction();
         try {
-            
+
             $question = $this->service->update($request->all(), ['id' => $question->id]);
             \DB::commit();
         } catch (\Throwable $e) {
@@ -197,7 +196,7 @@ class QuestionController extends Controller
             'data' => $this->commentService->paginate($request->all(), $question),
         ]);
     }
-    
+
     public function storeComment(Request $request, Question $question)
     {
         $validator = Validator::make($request->all(), [
@@ -237,5 +236,5 @@ class QuestionController extends Controller
             ]
         ], 200);
     }
-    
+
 }

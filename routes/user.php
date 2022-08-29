@@ -47,6 +47,7 @@ Route::group(['middleware' => 'guest:api'], function () {
 });
 
 Route::group(['middleware' => ['auth.patient']], function() {
+  Route::get('tops', 'TopController@search');
   Route::get('invite', 'ProfileController@invite');
   Route::get('me', 'ProfileController@me');
   Route::get('search', 'SearchController@search');
@@ -143,5 +144,3 @@ Route::group(['middleware' => ['auth.patient']], function() {
   Route::get('points/history', 'PointController@getHistory');
 });
 
-// HOME
-Route::get('tops', 'TopController@search');
