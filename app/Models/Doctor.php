@@ -48,7 +48,8 @@ class Doctor extends Model
     'categories',
     'job_name',
     'is_favorite',
-    'tag_name'
+    'tag_name',
+    'views_count'
   ];
 
   protected $hidden = [
