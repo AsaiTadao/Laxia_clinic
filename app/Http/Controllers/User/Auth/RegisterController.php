@@ -157,9 +157,9 @@ class RegisterController extends Controller
                 ]);
             }
             $user = User::create([
-                'email' => $params['users']['email'],
-                'provider' => $params['users']['provider'],
-                'provider_id' => $params['users']['provider_id'],
+                'email' => $params['email'],
+                'provider' => $params['provider'],
+                'provider_id' => $params['provider_id'],
                 'role' => UserType::USER,
                 'is_active' => 1,
             ]);
