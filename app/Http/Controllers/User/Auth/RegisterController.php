@@ -137,17 +137,17 @@ class RegisterController extends Controller
     {
         $params = $request->all();
         $user = User::where([
-                'email' => $params['users']['email'],
-                'provider' => $params['users']['provider'],
-                'provider_id' => $params['users']['provider_id'],
+                'email' => $params['email'],
+                'provider' => $params['provider'],
+                'provider_id' => $params['provider_id'],
             ])
             ->first();
 
         if (!$user) {
             $validator = Validator::make($request->all(), [
-                'users.email' => ['required', 'string', 'max:255', 'unique:users'],
-                'users.provider' => ['required', 'string', 'in:apple,facebook,twitter'],
-                'users.provider_id' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'max:255', 'unique:users'],
+                'provider' => ['required', 'string', 'in:apple,facebook,twitter'],
+                'provider_id' => ['required', 'string', 'max:255'],
             ]);
             if ($validator->fails()) {
                 return response()->json([
