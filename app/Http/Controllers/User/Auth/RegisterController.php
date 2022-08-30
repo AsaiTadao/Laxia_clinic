@@ -145,7 +145,7 @@ class RegisterController extends Controller
 
         if (!$user) {
             $validator = Validator::make($request->all(), [
-                'users.email' => ['required', 'email', 'max:255', 'unique:users'],
+                'users.email' => ['required', 'string', 'max:255', 'unique:users'],
                 'users.provider' => ['required', 'string', 'in:apple,facebook,twitter'],
                 'users.provider_id' => ['required', 'string', 'max:255'],
             ]);
