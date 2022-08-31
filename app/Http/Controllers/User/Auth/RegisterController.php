@@ -143,6 +143,8 @@ class RegisterController extends Controller
             ])
             ->first();
 
+        $status = 1;
+
         if (!$user) {
             $validator = Validator::make($request->all(), [
                 'email' => ['required', 'string', 'max:255', 'unique:users'],
@@ -163,6 +165,7 @@ class RegisterController extends Controller
                 'role' => UserType::USER,
                 'is_active' => 1,
             ]);
+            $status = 2;
         }
 
         Auth::guard('patient')->setToken(
@@ -170,7 +173,8 @@ class RegisterController extends Controller
         );
 
         return response()->json([
-            'status' => 1,
+            'status' => $status,
+            'user' => $user,
             'data' => [
                 'token' => $token
             ]
