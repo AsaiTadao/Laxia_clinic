@@ -266,6 +266,58 @@ class MediasTableSeeder extends Seeder
                 'created_at' => '2022-04-29 00:49:28',
                 'updated_at' => '2022-04-29 00:51:01',
             ),
+            19 =>
+            array (
+                'id' => 20,
+                'mediable_type' => 'App\Models\TreatProgress',
+                'mediable_id' => 1,
+                'type' => 1,
+                'category' => 'dislike',
+                'path' => 'https://clinic-reservation.s3-ap-northeast-1.amazonaws.com/clinic/cases/after/thumbs/nwAKaK2799.png',
+                'thumb_path' => 'https://clinic-reservation.s3-ap-northeast-1.amazonaws.com/clinic/cases/after/thumbs/nwAKaK2799.png',
+                'user_id' => 1,
+                'created_at' => '2022-04-29 01:35:12',
+                'updated_at' => '2022-04-29 01:36:28',
+            ),
+            20 =>
+            array (
+                'id' => 21,
+                'mediable_type' => 'App\Models\TreatProgress',
+                'mediable_id' => 2,
+                'type' => 1,
+                'category' => NULL,
+                'path' => 'https://clinic-reservation.s3-ap-northeast-1.amazonaws.com/user/medias/nGYLON6968.png',
+                'thumb_path' => 'https://clinic-reservation.s3-ap-northeast-1.amazonaws.com/user/medias/thumbs/nGYLON6968.png',
+                'user_id' => 1,
+                'created_at' => '2022-04-29 00:49:28',
+                'updated_at' => '2022-04-29 00:51:01',
+            ),
+            21 =>
+            array (
+                'id' => 22,
+                'mediable_type' => 'App\Models\TreatProgress',
+                'mediable_id' => 2,
+                'type' => 1,
+                'category' => NULL,
+                'path' => 'https://clinic-reservation.s3-ap-northeast-1.amazonaws.com/user/medias/nGYLON6968.png',
+                'thumb_path' => 'https://clinic-reservation.s3-ap-northeast-1.amazonaws.com/user/medias/thumbs/nGYLON6968.png',
+                'user_id' => 1,
+                'created_at' => '2022-04-29 00:49:28',
+                'updated_at' => '2022-04-29 00:51:01',
+            ),
+            22 =>
+            array (
+                'id' => 23,
+                'mediable_type' => 'App\Models\TreatProgress',
+                'mediable_id' =>2,
+                'type' => 1,
+                'category' => NULL,
+                'path' => 'https://clinic-reservation.s3-ap-northeast-1.amazonaws.com/clinic/cases/before/thumbs/hpOVJF5317.png',
+                'thumb_path' => 'https://clinic-reservation.s3-ap-northeast-1.amazonaws.com/clinic/cases/before/thumbs/hpOVJF5317.png',
+                'user_id' => 1,
+                'created_at' => '2022-04-29 00:49:28',
+                'updated_at' => '2022-04-29 00:51:01',
+            ),
         ));
     }
 }
