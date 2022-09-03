@@ -135,7 +135,7 @@ class MenuService
   public function get($id)
   {
     return Menu::with([
-      'clinic.avg_rate',
+      'clinic',
       'images',
       'categories',
       'diaries',

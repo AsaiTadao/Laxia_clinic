@@ -41,12 +41,12 @@ class PatientTableSeeder extends Seeder
             'name' => 'クリニック2',
             'city_id'=>22,
             'addr02'=>'addr02',
-            'nearest_station'=>'nearest_station',
+            'nearest_station'=>'渋谷駅、代官山駅',
             'site'=>'site',
-            'access'=>'access',
-            'phone_number'=>'123456789',
-            'credit_card'=>'123456789',
-            'parking'=>'parking',
+            'access'=>'代官山駅から徒歩7-8分。',
+            'phone_number'=>'033-1331-1333',
+            'credit_card'=>'VISA ',
+            'parking'=>'なし',
             'photo'=>'https://clinic-reservation.s3-ap-northeast-1.amazonaws.com/clinic/stuffs/thumbs/rPxjaP4537.png',
 
         ]);
@@ -65,8 +65,15 @@ class PatientTableSeeder extends Seeder
             'spec0'=>'10',
             'spec1'=>'19',
             'spec2'=>'1',
-            'profile'=>'ふぁsdふぁsdfあsdふぁsdfあsdf',
-            'career'=>'ふぁsdふぁsdfあsdふぁsdfあsdf',
+            'profile'=>'2009年	群馬大学医学部医学科卒業
+            2009年	(財)老年病研究所附属病院 脳神経外科 整形外科 麻酔科
+            2011年	品川美容外科
+            2014年	都内美容外科分院長
+            2017年	もとび美容外科クリニック
+            2018年	銀座TAクリニック
+            2019年	高崎TAクリニックアソシエ 院長',
+            'career'=>'日本美容外科学会(JSAS)
+            日本美容皮膚科学会',
             'photo'=>'https://clinic-reservation.s3-ap-northeast-1.amazonaws.com/doctor/profile/thumbs/qKItkl1677.png',
         ]);
         $doctor = User::create([
@@ -84,8 +91,15 @@ class PatientTableSeeder extends Seeder
             'spec0'=>'10',
             'spec1'=>'19',
             'spec2'=>'1',
-            'profile'=>'ふぁsdふぁsdfあsdふぁsdfあsdf',
-            'career'=>'ふぁsdふぁsdfあsdふぁsdfあsdf',
+            'profile'=>'2009年	群馬大学医学部医学科卒業
+            2009年	(財)老年病研究所附属病院 脳神経外科 整形外科 麻酔科
+            2011年	品川美容外科
+            2014年	都内美容外科分院長
+            2017年	もとび美容外科クリニック
+            2018年	銀座TAクリニック
+            2019年	高崎TAクリニックアソシエ 院長',
+            'career'=>'日本美容外科学会(JSAS)
+            日本美容皮膚科学会',
             'photo'=>'https://clinic-reservation.s3-ap-northeast-1.amazonaws.com/clinic/stuffs/thumbs/ybdqMF4994.png',
         ]);
         $doctor = User::create([

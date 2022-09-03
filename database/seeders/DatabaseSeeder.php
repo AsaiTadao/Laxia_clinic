@@ -41,5 +41,6 @@ class DatabaseSeeder extends Seeder
         $this->call(QuestionsTableSeeder::class);
         $this->call(QuestionCategoriesTableSeeder::class);
         $this->call(MediasTableSeeder::class);
+        $this->call(DoctorCategoriesTableSeeder::class);
     }
 }
