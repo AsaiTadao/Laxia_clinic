@@ -82,7 +82,18 @@ class Clinic extends Model
   {
     return $this->stuffs()->count();
   }
-
+  public function avg_rate(){
+    $avg_rate=0;
+     $diaries=$this->diaries()->get();
+     $count=count($diaries);
+     for($i=0;$i< $count;$i++){
+        $avg_rate+=$diaries[$i]['ave_rate'];
+     }
+     if($count){
+        return $avg_rate/$count;
+     }
+     return 0;
+  }
   public function getUserNameAttribute()
   {
     return $this->users()->first()->name;
