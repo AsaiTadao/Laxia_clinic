@@ -34,7 +34,7 @@ class CounselingReportsTableSeeder extends Seeder
                 'created_at' => '2022-04-01 14:30:26',
                 'updated_at' => '2022-04-01 14:30:26',
                 'title' => '湘南美容クリニック銀座院で二重埋没についてカウンセリング',
-                'public' => 0,
+                'public' => 1,
             ),
             1 =>
             array (
@@ -51,7 +51,7 @@ class CounselingReportsTableSeeder extends Seeder
                 'created_at' => '2022-04-01 14:31:46',
                 'updated_at' => '2022-04-01 14:31:46',
                 'title' => '湘南美容クリニック銀座院で二重埋没についてカウンセリング',
-                'public' => 0,
+                'public' => 1,
             ),
             2 =>
             array (
@@ -66,9 +66,9 @@ class CounselingReportsTableSeeder extends Seeder
                 'after_ccounseling' => 'カウンセリング後の感想',
                 'rate' => 4,
                 'created_at' => '2022-04-01 14:35:29',
-                'updated_at' => '2022-04-01 14:35:29',
+            'updated_at' => '2022-04-01 14:35:29',
                 'title' => '湘南美容クリニック銀座院で二重埋没についてカウンセリング',
-                'public' => 0,
+                'public' => 1,
             ),
         ));
 

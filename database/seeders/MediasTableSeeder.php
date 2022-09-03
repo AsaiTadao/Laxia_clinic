@@ -75,7 +75,7 @@ class MediasTableSeeder extends Seeder
             array (
                 'id' => 5,
                 'mediable_type' => 'App\\Models\\CounselingReport',
-                'mediable_id' => 3,
+                'mediable_id' => 1,
                 'type' => 1,
                 'category' => 'self',
                 'path' => 'https://clinic-reservation.s3-ap-northeast-1.amazonaws.com/clinic/menus/thumbs/jWDQUa1892.png',
@@ -88,7 +88,7 @@ class MediasTableSeeder extends Seeder
             array (
                 'id' => 6,
                 'mediable_type' => 'App\\Models\\CounselingReport',
-                'mediable_id' => 3,
+                'mediable_id' => 1,
                 'type' => 1,
                 'category' => 'self',
                 'path' => 'https://clinic-reservation.s3-ap-northeast-1.amazonaws.com/clinic/cases/after/thumbs/lGLOjh6166.png',
@@ -101,7 +101,7 @@ class MediasTableSeeder extends Seeder
             array (
                 'id' => 7,
                 'mediable_type' => 'App\\Models\\CounselingReport',
-                'mediable_id' => 3,
+                'mediable_id' => 1,
                 'type' => 1,
                 'category' => 'like',
                 'path' => 'https://clinic-reservation.s3-ap-northeast-1.amazonaws.com/clinic/cases/before/thumbs/sbYnMG7453.png',
@@ -114,7 +114,7 @@ class MediasTableSeeder extends Seeder
             array (
                 'id' => 8,
                 'mediable_type' => 'App\\Models\\CounselingReport',
-                'mediable_id' => 3,
+                'mediable_id' => 1,
                 'type' => 1,
                 'category' => 'like',
                 'path' => 'https://clinic-reservation.s3-ap-northeast-1.amazonaws.com/clinic/cases/after/thumbs/nwAKaK2799.png',
