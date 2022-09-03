@@ -40,5 +40,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PatientCategoriesTableSeeder::class);
         $this->call(QuestionsTableSeeder::class);
         $this->call(QuestionCategoriesTableSeeder::class);
+        $this->call(MediasTableSeeder::class);
     }
 }

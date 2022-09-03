@@ -46,7 +46,7 @@ class CounselingCategoriesTableSeeder extends Seeder
             3 =>
             array (
                 'id' => 4,
-                'counseling_id' => 4,
+                'counseling_id' => 1,
                 'category_id' => 33,
                 'created_at' => NULL,
                 'updated_at' => NULL,
@@ -54,7 +54,7 @@ class CounselingCategoriesTableSeeder extends Seeder
             4 =>
             array (
                 'id' => 5,
-                'counseling_id' => 5,
+                'counseling_id' => 2,
                 'category_id' => 27,
                 'created_at' => NULL,
                 'updated_at' => NULL,
@@ -62,7 +62,7 @@ class CounselingCategoriesTableSeeder extends Seeder
             5 =>
             array (
                 'id' => 6,
-                'counseling_id' => 6,
+                'counseling_id' => 3,
                 'category_id' => 28,
                 'created_at' => NULL,
                 'updated_at' => NULL,

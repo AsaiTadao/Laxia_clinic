@@ -501,7 +501,5 @@ class AttachmentsTableSeeder extends Seeder
                 'updated_at' => '2022-08-21 09:45:47',
             )
         ));
-
-
     }
 }
