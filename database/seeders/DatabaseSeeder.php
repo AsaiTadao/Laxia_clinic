@@ -41,6 +41,11 @@ class DatabaseSeeder extends Seeder
         $this->call(QuestionsTableSeeder::class);
         $this->call(QuestionCategoriesTableSeeder::class);
         $this->call(MediasTableSeeder::class);
+        $this->call(DiaryTextQuestionsTableSeeder::class);
+        $this->call(MenuCategoriesTableSeeder::class);
+        $this->call(MenuCategoriesTableSeeder::class);
+        $this->call(TreatProgressesTableSeeder::class);
+        $this->call(TreatStatusTableSeeder::class);
         $this->call(DoctorCategoriesTableSeeder::class);
     }
 }
