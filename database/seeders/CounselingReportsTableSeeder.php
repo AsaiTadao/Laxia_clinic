@@ -22,7 +22,7 @@ class CounselingReportsTableSeeder extends Seeder
             0 =>
             array (
                 'id' => 1,
-                'patient_id' => NULL,
+                'patient_id' => 1,
                 'clinic_id' => 1,
                 'doctor_id' => 1,
                 'counseling_date' => '2020-10-10',
@@ -43,7 +43,7 @@ class CounselingReportsTableSeeder extends Seeder
             1 =>
             array (
                 'id' => 2,
-                'patient_id' => NULL,
+                'patient_id' => 1,
                 'clinic_id' => 1,
                 'doctor_id' => 2,
                 'counseling_date' => '2020-10-10',
@@ -64,7 +64,7 @@ class CounselingReportsTableSeeder extends Seeder
             2 =>
             array (
                 'id' => 3,
-                'patient_id' => NULL,
+                'patient_id' => 1,
                 'clinic_id' => 1,
                 'doctor_id' => 3,
                 'counseling_date' => '2020-10-10',
