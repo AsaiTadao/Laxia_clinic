@@ -104,6 +104,7 @@ class ClinicService
         'doctors',
         'doctors.categories',
         'menus.categories',
+        'menus.images',
         'counselings.categories',
         'diaries.categories',
       ])->leftJoinSub($diary_avg, 'diary_avg', function ($join) {

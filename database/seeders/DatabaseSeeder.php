@@ -46,5 +46,6 @@ class DatabaseSeeder extends Seeder
         $this->call(MenuCategoriesTableSeeder::class);
         $this->call(TreatProgressesTableSeeder::class);
         $this->call(TreatStatusTableSeeder::class);
+        $this->call(DoctorCategoriesTableSeeder::class);
     }
 }
