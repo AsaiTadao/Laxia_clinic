@@ -86,7 +86,7 @@ class MenuCategoriesTableSeeder extends Seeder
             ),
             13 =>
             array (
-                'menu_id' => 9,
+                'menu_id' => 6,
                 'category_id' => 34,
             ),
             14 =>

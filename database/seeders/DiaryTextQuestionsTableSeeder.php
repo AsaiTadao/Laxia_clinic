@@ -83,7 +83,7 @@ class DiaryTextQuestionsTableSeeder extends Seeder
             ),
             6 =>
             array (
-                'id' => 6,
+                'id' => 7,
                 'question_id' => 6,
                 'diary_id' => 2,
                 'answer' => '二重幅が狭くて吊り目になるのが気になっていた。コンプレックスである。',
@@ -92,7 +92,7 @@ class DiaryTextQuestionsTableSeeder extends Seeder
             ),
             7 =>
             array (
-                'id' => 7,
+                'id' => 8,
                 'question_id' => 1,
                 'diary_id' => 2,
                 'answer' => '・施術費用が安い
@@ -107,7 +107,7 @@ class DiaryTextQuestionsTableSeeder extends Seeder
             ),
             8 =>
             array (
-                'id' => 8,
+                'id' => 9,
                 'question_id' => 2,
                 'diary_id' => 2,
                 'answer' => '前回お腹周り担当してくれた方々なので信頼してました。
@@ -117,7 +117,7 @@ class DiaryTextQuestionsTableSeeder extends Seeder
             ),
             9 =>
             array (
-                'id' => 9,
+                'id' => 10,
                 'question_id' => 3,
                 'diary_id' => 2,
                 'answer' => '前回お腹周り担当してくれた方々なので信頼してました。
@@ -127,7 +127,7 @@ class DiaryTextQuestionsTableSeeder extends Seeder
             ),
             10 =>
             array (
-                'id' => 10,
+                'id' => 11,
                 'question_id' => 4,
                 'diary_id' => 2,
                 'answer' => '二重幅が狭くて吊り目になるのが気になっていた。コンプレックスである。',
@@ -136,7 +136,7 @@ class DiaryTextQuestionsTableSeeder extends Seeder
             ),
             11 =>
             array (
-                'id' => 11,
+                'id' => 12,
                 'question_id' => 5,
                 'diary_id' => 2,
                 'answer' => '二重幅が狭くて吊り目になるのが気になっていた。コンプレックスである。',
