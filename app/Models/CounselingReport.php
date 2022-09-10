@@ -62,7 +62,7 @@ class CounselingReport extends Model
   public function getPatientNicknameAttribute()
   {
     if ($this->owner()->count()) {
-      return $this->owner()->first()->nickname;
+      return $this->owner()->first()->name;
     }
     return null;
   }
