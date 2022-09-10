@@ -242,7 +242,7 @@ class CounselingController extends Controller
         return response()->json([
             'status' => 1,
             'data' => [
-                'commet' => $commet
+                'comment' => $commet
             ]
         ], 200);
     }
