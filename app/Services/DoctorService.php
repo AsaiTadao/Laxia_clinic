@@ -113,9 +113,14 @@ class DoctorService
   {
     return Doctor::with([
         'images',
-        'diaries',
         'cases',
-        'counselings',
+        'cases.clinic',
+        'cases.categories,',
+        'cases.doctor',
+        'cases.menus',
+        'cases.images',
+        'counselings.categories',
+        'diaries.categories',
         'questions',
         'clinic'
       ])
