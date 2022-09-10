@@ -133,6 +133,10 @@ class PatientTableSeeder extends Seeder
             $patient = Patient::where('id',$i+1)->update([
                 'name' => '患者_' . $i,
                 'kana' => 'カンジャ_' . $i,
+                'unique_id' => NULL,
+                'nickname' => NULL,
+                'intro' => NULL,
+                'photo' => 'https://clinic-reservation.s3-ap-northeast-1.amazonaws.com/clinic/stuffs/thumbs/TSVOQS4996.jpg',
                 'gender' => random_int(0, 1) == 1 ? 'female' : 'male',
                 'phone_number' => $faker->e164PhoneNumber,
                 'birthday' => $faker->date

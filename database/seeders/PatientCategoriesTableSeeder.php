@@ -15,7 +15,6 @@ class PatientCategoriesTableSeeder extends Seeder
     public function run()
     {
 
-
         DB::table('patient_categories')->delete();
 
         DB::table('patient_categories')->insert(array (
