@@ -101,7 +101,7 @@ class ClinicService
         'images',
         // 'menus_limit2',
         'cases.clinic',
-        'cases.categories,',
+        'cases.categories',
         'cases.doctor',
         'cases.menus',
         'cases.images',

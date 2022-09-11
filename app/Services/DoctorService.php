@@ -115,7 +115,7 @@ class DoctorService
         'images',
         'cases',
         'cases.clinic',
-        'cases.categories,',
+        'cases.categories',
         'cases.doctor',
         'cases.menus',
         'cases.images',
