@@ -103,6 +103,7 @@ class ClinicService
         'cases',
         'doctors',
         'doctors.categories',
+        'doctors.clinic',
         'menus.categories',
         'menus.images',
         'counselings.categories',
