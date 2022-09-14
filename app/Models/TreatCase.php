@@ -42,10 +42,14 @@ class TreatCase extends Model
     ];
     public function getTagNameAttribute()
     {
-      $tag=$this->categories()->first();
-      if($tag)
-        return $tag->name;
-      return '';
+        $avg_rate='';
+        $tag=$this->categories()->get();
+        $count=count($tag);
+        for($i=0;$i<$count;$i++){
+          $avg_rate.=$tag[$i]['name'].', ';
+        }
+        return $avg_rate;
+        return '';
     }
     public function clinic()
     {
