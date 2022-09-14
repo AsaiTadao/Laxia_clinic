@@ -60,13 +60,21 @@ class Diary extends Model
     'last_content',
     'is_favorite',
     'is_mine',
-    'tag_name'
+    'tag_name',
+    'first_content'
   ];
   public function getTagNameAttribute()
   {
     $tag=$this->categories()->first();
     if($tag)
       return $tag->name;
+    return '';
+  }
+  public function getFirstContentAttribute()
+  {
+    $answer=$this->text_questions()->first();
+    if($answer)
+        return $answer['pivot']['answer'];
     return '';
   }
   public function getPatientNicknameAttribute()
