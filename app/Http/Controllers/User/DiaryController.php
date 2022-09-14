@@ -82,7 +82,7 @@ class DiaryController extends Controller
         $patient = $currentUser->patient;
         // if ($patient->id != $diary->patient_id) {
             $this->viewService->view($patient, $diary);
-        // }
+        // } this is code
         return response()->json([
             'status' => 1,
             'data' => [
