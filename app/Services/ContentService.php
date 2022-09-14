@@ -106,7 +106,7 @@ class ContentService
     $diaries_query->select(
         'diaries.id',
         'patients.id as patient_id',
-        'patients.nickname as nickname',
+        'patients.name as nickname',
         'patients.photo as photo',
         'clinics.name as clinic',
         'clinics.id as clinic_id',
@@ -169,7 +169,7 @@ class ContentService
     $cr_query->select(
         'counseling_reports.id',
         'patients.id as patient_id',
-        'patients.nickname as nickname',
+        'patients.name as nickname',
         'patients.photo as photo',
         'clinics.name as clinic',
         'clinics.id as clinic_id',
@@ -228,7 +228,7 @@ class ContentService
     $q_query->select(
         'questions.id',
         'patients.id as patient_id',
-        'patients.nickname as nickname',
+        'patients.name as nickname',
         'patients.photo as photo',
         \DB::raw("NULL as clinic"),
         \DB::raw("NULL as clinic_id"),
