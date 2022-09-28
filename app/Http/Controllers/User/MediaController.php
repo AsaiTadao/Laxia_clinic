@@ -62,5 +62,5 @@ class MediaController extends Controller
         return response()->json([
             'media' => $media
         ], 200);
-    }    
+    }
 }

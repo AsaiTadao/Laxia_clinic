@@ -9,6 +9,7 @@ use App\Models\TreatProgress;
 use App\Services\ProgressService;
 use App\Http\Requests\StuffRequest;
 use App\Services\CommentService;
+use App\Services\ViewService;
 
 class ProgressController extends Controller
 {
@@ -22,22 +23,31 @@ class ProgressController extends Controller
      */
     protected $commentService;
 
+    protected $viewService;
+
+
     public function __construct(
         ProgressService $service,
-        CommentService $commentService
+        CommentService $commentService,
+        ViewService $viewService
+
     ) {
         $this->service = $service;
         $this->commentService = $commentService;
+        $this->viewService = $viewService;
     }
 
     public function get($progress_id)
     {
+
         $progress = TreatProgress::find($progress_id);
         if(empty($progress))
             return response()->json([
                 'progress' => []
             ], 200);
-
+        $currentUser = auth()->guard('patient')->user();
+        $patient = $currentUser->patient;
+        $this->viewService->view($patient, $progress);
         return response()->json([
             'progress' => $progress->load([
                 'diary.menus.diaries',
@@ -159,5 +169,20 @@ class ProgressController extends Controller
             ]
         ], 200);
     }
+    public function toggleLike($diary_id)
+    {
+        $diary = TreatProgress::find($diary_id);
+        if(empty($diary))
+            return response()->json([
+                'status' => 0,
+                'data' => []
+            ], 200);
 
+        $patient = auth()->guard('patient')->user()->patient;
+        $result = $diary->likers()->toggle($patient->id);
+        return response()->json([
+            'status' => 1,
+            'data' => $result
+        ], 200);
+    }
 }

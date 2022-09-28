@@ -48,8 +48,8 @@ class Diary extends Model
     'comments_count',
     'likes_count',
     'is_like',
-    'before_image',
-    'after_image',
+    'before_images',
+    'after_images',
     'patient_nickname',
     'patient_gender',
     'patient_photo',
@@ -235,11 +235,11 @@ class Diary extends Model
   }
   public function aftermedias()
   {
-    return $this->medias()->where('type',1);
+    return $this->medias()->where('category','after');
   }
   public function beforemedias()
   {
-    return $this->medias()->where('type',0);
+    return $this->medias()->where('category','before');
   }
   public function medias()
   {
@@ -253,19 +253,12 @@ class Diary extends Model
   }
 
   // Attribute Functions
-  public function getBeforeImageAttribute()
+  public function getBeforeImagesAttribute()
   {
-    if ($this->medias()->count() == 0) {
-      return null;
-    }
-    $first_media = $this->medias()->where('type',0)->first();
-    if ($first_media) {
-      return $first_media->thumb_path;
-    }
-    return null;
+    return $this->beforemedias()->get();
   }
 
-  public function getAfterImageAttribute()
+  public function getAfterImagesAttribute()
   {
     // if ($this->progresses()->count() == 0) {
     //   return null;
@@ -276,11 +269,7 @@ class Diary extends Model
     // if ($last_progress->medias()->count() == 0) {
     //   return null;
     // }
-    $media = $this->medias()->where('type',1)->first();
-    if (!isset($media)) {
-      return null;
-    }
-    return $media->thumb_path;
+    return $this->aftermedias()->get();
   }
 
   public function getLastContentAttribute()

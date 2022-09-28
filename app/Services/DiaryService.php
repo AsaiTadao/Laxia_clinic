@@ -151,7 +151,6 @@ class DiaryService
         + $diaryAttrs['rate_09']
       ) / 9, 1);
     $menuAttrs = Arr::get($attributes, 'menus');
-
     $menuPriceSum = 0;
     foreach ($menuAttrs as $item) {
       $menuPriceSum += $item["cost"];
@@ -174,7 +173,7 @@ class DiaryService
         foreach ($mediaAttrs as $id)
         {
         $media = Media::find($id);
-        $media->type=0;
+        $media->category='before';
         if (!$media) continue;
             $diary->medias()->save($media);
         }
@@ -184,7 +183,7 @@ class DiaryService
         foreach ($mediaAttrs as $id)
         {
         $media = Media::find($id);
-        $media->type=1;
+        $media->category='after';
         if (!$media) continue;
         $diary->medias()->save($media);
         }
@@ -220,6 +219,13 @@ class DiaryService
         + $diaryAttrs['rate_08']
         + $diaryAttrs['rate_09']
       ) / 9, 1);
+    $menuAttrs = Arr::get($attributes, 'menus');
+    $menuPriceSum = 0;
+    foreach ($menuAttrs as $item) {
+    $menuPriceSum += $item["cost"];
+    }
+    $diaryAttrs['price'] = $menuPriceSum + $diaryAttrs["cost_anesthetic"] + $diaryAttrs["cost_drug"] + $diaryAttrs["cost_other"];
+
     $diary->update($diaryAttrs);
 
     $categoryAttrs = Arr::get($attributes, 'categories');
@@ -240,7 +246,7 @@ class DiaryService
         foreach ($mediaAttrs as $id)
         {
         $media = Media::find($id);
-        $media->type=0;
+        $media->category='before';
         if (!$media) continue;
         $diary->medias()->save($media);
         }
@@ -250,7 +256,7 @@ class DiaryService
         foreach ($mediaAttrs as $id)
         {
         $media = Media::find($id);
-        $media->type=1;
+        $media->category='after';
         if (!$media) continue;
         $diary->medias()->save($media);
         }

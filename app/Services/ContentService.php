@@ -49,7 +49,7 @@ class ContentService
       ->where('mediable_type', 'App\Models\Diary')
       ->groupBy('mediable_id');
     $media1_query = \DB::table('medias')
-      ->select('medias.mediable_id', 'thumb_path')
+      ->select('medias.mediable_id','medias.type','path' ,'thumb_path')
       ->joinSub($max_medias, 'first_medias', function($join) {
         $join->on('medias.id', '=', 'first_medias.max_id');
       });
@@ -113,6 +113,8 @@ class ContentService
         'first_content.answer as first_content',
         'media2.content as last_content',
         'media1.thumb_path as first_thumb_path',
+        'media1.type as isvideo',
+        'media1.path as path',
         'media2.thumb_path as last_thumb_path',
         'comments_count.count as comments_count',
         'views_count.count as views_count',
@@ -138,7 +140,7 @@ class ContentService
       ->where('medias.category', 'self')
       ->groupBy('mediable_id');
     $media_query = \DB::table('medias')
-      ->select('medias.mediable_id', 'thumb_path')
+      ->select('medias.mediable_id','medias.type' ,'path' , 'thumb_path')
       ->joinSub($medias, 'sub_medias', function($join) {
         $join->on('medias.id', '=', 'sub_medias.min_id');
       });
@@ -176,6 +178,8 @@ class ContentService
         'counseling_reports.content as first_content',
         'counseling_reports.content as last_conetnt',
         'medias.thumb_path as first_thumb_path',
+        'medias.type as isvideo',
+        'medias.path as path',
         'medias.thumb_path as last_thumb_path',
         'comments_count.count as comments_count',
         'views_count.count as views_count',
@@ -199,7 +203,7 @@ class ContentService
       ->where('medias.mediable_type', 'App\Models\Question')
       ->groupBy('mediable_id');
     $media_query = \DB::table('medias')
-      ->select('medias.mediable_id', 'thumb_path')
+      ->select('medias.mediable_id','medias.type' ,'path' , 'thumb_path')
       ->joinSub($medias, 'sub_medias', function($join) {
         $join->on('medias.id', '=', 'sub_medias.min_id');
       });
@@ -235,6 +239,8 @@ class ContentService
         'questions.content as first_content',
         'questions.content as last_content',
         'medias.thumb_path as first_thumb_path',
+        'medias.type as isvideo',
+        'medias.path as path',
         'medias.thumb_path as last_thumb_path',
         'comments_count.count as comments_count',
         'views_count.count as views_count',
